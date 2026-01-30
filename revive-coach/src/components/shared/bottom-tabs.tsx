@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, useSpring, useTransform } from 'framer-motion'
 import {
-  LayoutDashboard,
+  Calendar,
   Users,
-  Bell,
+  MessageCircle,
   Settings
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -19,9 +19,9 @@ interface TabItem {
 }
 
 const tabs: TabItem[] = [
-  { label: 'Inicio', href: '/', icon: LayoutDashboard },
+  { label: 'Agenda', href: '/', icon: Calendar },
   { label: 'Clientes', href: '/clientes', icon: Users },
-  { label: 'Alertas', href: '/alertas', icon: Bell },
+  { label: 'Mensajes', href: '/mensajes', icon: MessageCircle },
   { label: 'Ajustes', href: '/configuracion', icon: Settings },
 ]
 

@@ -8,10 +8,10 @@ import { GlassCard } from '@/components/glass'
 import { GlassBadge } from '@/components/glass/glass-badge'
 import { MiniDial } from '@/components/charts'
 import { cn } from '@/lib/utils'
-import type { ClienteConEstado } from '@/types'
+import type { ClienteConPago } from '@/types'
 
 interface ClienteCardProps {
-  cliente: ClienteConEstado
+  cliente: ClienteConPago
   index?: number
 }
 
@@ -90,6 +90,18 @@ export function ClienteCard({ cliente, index = 0 }: ClienteCardProps) {
                     size="sm"
                   >
                     {cliente.estado === 'en_pausa' ? 'Pausa' : 'Fin'}
+                  </GlassBadge>
+                )}
+                {cliente.estadoPago && (
+                  <GlassBadge
+                    variant={
+                      cliente.estadoPago === 'pagado' ? 'success' :
+                      cliente.estadoPago === 'pendiente' ? 'warning' : 'danger'
+                    }
+                    size="sm"
+                  >
+                    {cliente.estadoPago === 'pagado' ? 'Al día' :
+                     cliente.estadoPago === 'pendiente' ? 'Pendiente' : 'Vencido'}
                   </GlassBadge>
                 )}
               </div>

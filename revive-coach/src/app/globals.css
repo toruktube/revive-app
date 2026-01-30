@@ -111,58 +111,63 @@
 }
 
 .dark {
-  /* Base colors - Dark Mode */
-  --background: oklch(0.13 0.01 260);
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(0.18 0.01 260);
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.18 0.01 260);
-  --popover-foreground: oklch(0.98 0 0);
+  /* Base colors - Dark Mode (Stitch Design) */
+  --background: #12121A;
+  --foreground: #FFFFFF;
+  --card: rgba(255, 255, 255, 0.03);
+  --card-foreground: #FFFFFF;
+  --popover: #12121A;
+  --popover-foreground: #FFFFFF;
 
-  /* Primary - Verde vital (brighter in dark) */
-  --primary: oklch(0.65 0.2 145);
-  --primary-foreground: oklch(0.13 0.01 260);
+  /* Primary - White accent for dark mode */
+  --primary: #FFFFFF;
+  --primary-foreground: #12121A;
 
-  /* Secondary - Naranja cálido */
-  --secondary: oklch(0.7 0.15 55);
-  --secondary-foreground: oklch(0.13 0.01 260);
+  /* Secondary */
+  --secondary: rgba(255, 255, 255, 0.1);
+  --secondary-foreground: #FFFFFF;
 
-  --muted: oklch(0.22 0.01 260);
-  --muted-foreground: oklch(0.65 0.02 240);
-  --accent: oklch(0.22 0.02 145);
-  --accent-foreground: oklch(0.98 0 0);
+  --muted: rgba(255, 255, 255, 0.05);
+  --muted-foreground: #A1A1AA;
+  --accent: rgba(255, 255, 255, 0.08);
+  --accent-foreground: #FFFFFF;
 
-  /* Semantic colors - Dark */
-  --destructive: oklch(0.65 0.22 25);
-  --warning: oklch(0.7 0.18 70);
-  --success: oklch(0.65 0.2 145);
+  /* Semantic colors - Stitch palette */
+  --destructive: #EF4444;
+  --warning: #F59E0B;
+  --success: #22C55E;
 
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.65 0.2 145);
+  /* Stitch accent colors */
+  --accent-emerald: #22C55E;
+  --accent-blue: #3B82F6;
+  --accent-violet: #8B5CF6;
+
+  --border: rgba(255, 255, 255, 0.15);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: rgba(255, 255, 255, 0.3);
 
   /* Chart colors - Dark */
-  --chart-1: oklch(0.65 0.2 145);
-  --chart-2: oklch(0.7 0.15 55);
-  --chart-3: oklch(0.65 0.2 250);
-  --chart-4: oklch(0.7 0.15 320);
-  --chart-5: oklch(0.65 0.18 200);
+  --chart-1: #22C55E;
+  --chart-2: #3B82F6;
+  --chart-3: #8B5CF6;
+  --chart-4: #F59E0B;
+  --chart-5: #EF4444;
 
   /* Sidebar - Dark */
-  --sidebar: oklch(0.15 0.01 260);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.65 0.2 145);
-  --sidebar-primary-foreground: oklch(0.13 0.01 260);
-  --sidebar-accent: oklch(0.22 0.02 145);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.65 0.2 145);
+  --sidebar: #12121A;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #FFFFFF;
+  --sidebar-primary-foreground: #12121A;
+  --sidebar-accent: rgba(255, 255, 255, 0.08);
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: rgba(255, 255, 255, 0.15);
+  --sidebar-ring: rgba(255, 255, 255, 0.3);
 
-  /* Liquid Glass effect - Dark */
-  --glass-bg: rgba(30, 30, 40, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-blur-value: 16px;
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  /* Liquid Glass effect - Dark (Stitch style) */
+  --glass-bg: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur-value: 20px;
+  --glass-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.3);
 }
 
 @layer base {
@@ -185,6 +190,15 @@
   padding: 1.5rem;
 }
 
+/* Stitch-style glass card */
+.dark .glass-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.3);
+}
+
 .glass-subtle {
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(8px);
@@ -193,8 +207,73 @@
 }
 
 .dark .glass-subtle {
-  background: rgba(30, 30, 40, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Stitch accent badges with glow */
+.badge-emerald {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.25);
+}
+
+.badge-blue {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.25);
+}
+
+.badge-violet {
+  background-color: rgba(139, 92, 246, 0.1);
+  color: #a78bfa;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.25);
+}
+
+/* Mono badge (black with white border) */
+.mono-badge {
+  background-color: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Ambient lighting effect */
+.ambient-light {
+  position: fixed;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(150px);
+}
+
+.ambient-light-top {
+  top: -20%;
+  left: -20%;
+  width: 80%;
+  height: 50%;
+  background: white;
+  opacity: 0.03;
+}
+
+.ambient-light-bottom {
+  bottom: -10%;
+  right: -10%;
+  width: 60%;
+  height: 40%;
+  background: white;
+  opacity: 0.02;
 }
 
 /* Custom scrollbar */

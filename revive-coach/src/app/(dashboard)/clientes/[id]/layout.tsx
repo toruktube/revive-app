@@ -3,15 +3,14 @@
 import { useParams, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Dumbbell, Apple, Heart, Clock } from 'lucide-react'
+import { ArrowLeft, Dumbbell, CreditCard, Clock } from 'lucide-react'
 import { GlassButton } from '@/components/glass/glass-button'
 import { cn } from '@/lib/utils'
 
 const tabs = [
   { id: 'overview', label: 'General', href: '', icon: null },
-  { id: 'entrenamiento', label: 'Entrenamiento', href: '/entrenamiento', icon: Dumbbell },
-  { id: 'nutricion', label: 'Nutrición', href: '/nutricion', icon: Apple },
-  { id: 'bienestar', label: 'Bienestar', href: '/bienestar', icon: Heart },
+  { id: 'rutinas', label: 'Rutinas', href: '/rutinas', icon: Dumbbell },
+  { id: 'pagos', label: 'Pagos', href: '/pagos', icon: CreditCard },
   { id: 'historial', label: 'Historial', href: '/historial', icon: Clock },
 ]
 

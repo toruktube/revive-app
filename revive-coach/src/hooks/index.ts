@@ -1,2 +1,7 @@
 export { useClientes, type ClienteFilters } from './use-clientes'
 export { useCliente, type ClienteCompleto } from './use-cliente'
+export { useAgenda } from './use-agenda'
+export { useDiario } from './use-diario'
+export { useMensajes } from './use-mensajes'
+export { usePagos } from './use-pagos'
+export { useRutinas } from './use-rutinas'

@@ -134,3 +134,129 @@ export interface Insight {
   clientesAfectados: number
   prioridad: PrioridadAlerta
 }
+
+// ==========================================
+// Nuevos tipos para MVP (5 funcionalidades)
+// ==========================================
+
+// --- AGENDA ---
+export type TipoSesion = 'presencial' | 'online' | 'evaluacion'
+export type EstadoSesion = 'programada' | 'completada' | 'cancelada' | 'no_asistio'
+
+export interface SesionCalendario {
+  id: string
+  cliente_id: string
+  cliente_nombre: string
+  cliente_apellidos?: string
+  fecha: string // ISO date string
+  hora_inicio: string // "HH:mm"
+  hora_fin: string // "HH:mm"
+  tipo: TipoSesion
+  estado: EstadoSesion
+  notas?: string
+  ubicacion?: string
+}
+
+// --- PAGOS ---
+export type EstadoPago = 'pagado' | 'pendiente' | 'vencido'
+export type MetodoPago = 'efectivo' | 'transferencia' | 'tarjeta' | 'bizum'
+
+export interface Pago {
+  id: string
+  cliente_id: string
+  cliente_nombre: string
+  monto: number
+  fecha_emision: string
+  fecha_vencimiento: string
+  fecha_pago?: string
+  estado: EstadoPago
+  metodo?: MetodoPago
+  concepto: string
+  notas?: string
+}
+
+// --- DIARIO (Notas post-sesión) ---
+export interface NotaSesion {
+  id: string
+  cliente_id: string
+  cliente_nombre: string
+  cliente_apellidos?: string
+  sesion_id?: string
+  fecha: string
+  energia: number // 1-5
+  estado_animo: number // 1-5
+  adherencia: number // 1-5
+  dolor_molestias?: string
+  notas_libres: string
+  objetivos_proxima?: string
+  created_at: string
+}
+
+// --- MENSAJES WHATSAPP ---
+export type CategoriaPlantilla = 'motivacion' | 'recordatorio' | 'nutricion' | 'seguimiento' | 'general'
+export type EstadoMensajeWA = 'enviado' | 'entregado' | 'leido'
+export type DireccionMensaje = 'enviado' | 'recibido'
+
+export interface PlantillaMensaje {
+  id: string
+  nombre: string
+  contenido: string
+  categoria: CategoriaPlantilla
+}
+
+export interface MensajeWhatsApp {
+  id: string
+  conversacion_id: string
+  contenido: string
+  direccion: DireccionMensaje
+  estado: EstadoMensajeWA
+  hora: string // ISO string
+}
+
+export interface ConversacionWhatsApp {
+  id: string
+  cliente_id: string
+  cliente_nombre: string
+  cliente_apellidos?: string
+  cliente_telefono: string
+  ultimo_mensaje: string
+  ultimo_mensaje_hora: string
+  no_leidos: number
+  mensajes: MensajeWhatsApp[]
+}
+
+// --- RUTINAS ---
+export interface EjercicioRutina {
+  id: string
+  nombre: string
+  series: number
+  repeticiones: string // "8-12" o "30s" etc.
+  peso?: string // "20kg" o "Bodyweight"
+  descanso?: string // "60s"
+  notas?: string
+}
+
+export interface DiaRutina {
+  id: string
+  nombre: string // "Día 1 - Tren Superior"
+  ejercicios: EjercicioRutina[]
+}
+
+export interface RutinaEntrenamiento {
+  id: string
+  cliente_id: string
+  nombre: string
+  descripcion?: string
+  dias: DiaRutina[]
+  activa: boolean
+  fecha_inicio: string
+  fecha_fin?: string
+  created_at: string
+}
+
+// Extender ClienteConEstado con datos de pago
+export interface ClienteConPago extends ClienteConEstado {
+  estadoPago?: EstadoPago
+  proximaSesion?: string // ISO date
+  proximoPago?: string // ISO date
+}

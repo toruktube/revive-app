@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import {
-  LayoutDashboard,
+  Calendar,
   Users,
-  Bell,
+  MessageCircle,
   Settings,
   Dumbbell
 } from 'lucide-react'
@@ -19,10 +19,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: 'Dashboard', href: '/', icon: LayoutDashboard },
+  { label: 'Agenda', href: '/', icon: Calendar },
   { label: 'Clientes', href: '/clientes', icon: Users },
-  { label: 'Alertas', href: '/alertas', icon: Bell },
-  { label: 'Configuración', href: '/configuracion', icon: Settings },
+  { label: 'Mensajes', href: '/mensajes', icon: MessageCircle },
+  { label: 'Ajustes', href: '/configuracion', icon: Settings },
 ]
 
 interface SidebarProps {
