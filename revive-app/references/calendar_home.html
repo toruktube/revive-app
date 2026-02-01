@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RƎVIVE Calendar Rhino Edition</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        "revive-bg": "#12121A", // Dark blue-toned charcoal
+                        "glass-border": "rgba(255, 255, 255, 0.15)",
+                        "glass-surface": "rgba(255, 255, 255, 0.03)",
+                        "glass-surface-hover": "rgba(255, 255, 255, 0.08)",
+                        "text-primary": "#FFFFFF",
+                        "text-secondary": "#A1A1AA",
+                        "accent-emerald": "#22C55E",
+                        "accent-blue": "#3B82F6",
+                        "accent-violet": "#8B5CF6",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.5)',
+                        'mono-glow': '0 0 15px rgba(255, 255, 255, 0.15)',
+                    },
+                    backdropBlur: {
+                        'glass': '20px',
+                    },
+                    backgroundImage: {
+                        'rhino-watermark': "url('https://i.ibb.co/6800qL9/rhino-revive.png')", // Placeholder for the shape based on user image, implemented as SVG mask below for better control
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .backward-e {
+            display: inline-block;
+            transform: scaleX(-1);
+        }
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.3);
+        }
+        .mono-badge {
+            background-color: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #FFFFFF;
+        }.rhino-bg {
+            mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20,80 L40,80 L50,60 L80,60 L90,80 L130,80 L140,50 L180,40 L195,20 L160,30 L150,10 L120,30 L100,10 L60,10 L30,40 Z' fill='black'/%3E%3C/svg%3E");-webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 500 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40,150 C40,150 80,80 160,60 C240,40 300,80 340,100 C360,110 380,80 400,60 C420,40 440,80 460,100 L490,90 L450,140 C450,140 400,160 380,150 C360,140 340,160 320,180 L400,240 L160,240 L120,200 L80,240 L20,200 Z' fill='black'/%3E%3C/svg%3E");
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            -webkit-mask-size: contain;
+             mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+        }
+        .rhino-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-10deg);
+            width: 120%;
+            height: 60%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 60%);
+            z-index: 0;
+            pointer-events: none;clip-path: polygon(
+                15% 70%, 5% 60%, 20% 30%, 45% 10%, 
+                60% 40%, 70% 15%, 85% 50%, 95% 40%, 
+                100% 50%, 85% 70%, 95% 85%, 70% 80%, 
+                60% 90%, 40% 90%, 30% 70%, 25% 90%
+            );
+            filter: blur(1px);
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-revive-bg text-text-primary font-display min-h-screen relative overflow-hidden selection:bg-white selection:text-black">
+<div class="fixed top-[-20%] left-[-20%] w-[80%] h-[50%] bg-white opacity-[0.03] blur-[150px] rounded-full pointer-events-none z-0"></div>
+<div class="fixed bottom-[-10%] right-[-10%] w-[60%] h-[40%] bg-white opacity-[0.02] blur-[150px] rounded-full pointer-events-none z-0"></div>
+<div class="fixed top-[35%] left-0 w-full h-full pointer-events-none z-0 opacity-100 mix-blend-overlay">
+<div class="rhino-watermark"></div>
+</div>
+<div class="relative z-10 flex flex-col h-screen overflow-hidden">
+<header class="flex items-center justify-between px-6 pt-14 pb-4 shrink-0 bg-transparent z-20">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-xl bg-black border border-glass-border flex items-center justify-center group shadow-mono-glow overflow-hidden relative">
+<div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+<path d="M21 10c-2 0-3-1-4-2-2-2-4-2-6 0-1 1-2 1-3 1v5h2l1 2h3l1-1 3 1 2-2 1-4z M2 14l3-3 2 1 1-1 3 3H7l-1 2H3l-1-2z"></path>
+</svg>
+</div>
+<h1 class="text-2xl font-bold tracking-tight text-white leading-none flex items-center gap-[1px]">
+                    R<span class="backward-e text-white">E</span>VIVE
+                </h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative size-10 rounded-full border border-glass-border p-[2px] overflow-hidden bg-white/5">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="Profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDiFd0RugkmkHITvtYvxoVDou8QXoBukpk3faP43Wj8K1hoKhMATwegPvS7p409AvhQloUut9tK-oUdeo4U3KK8O7FpKRjh7UBax8cHc1Zk7pqeaaJ6E2xsXGzETKv4zT6A381S14LqHsUSEBl-bIzbFL2cdYP4-Umpla7u0ubFjIiHXc4kZ7ZiVKlwUbffvvlKTBk08rKCik5RWLnCC1JtA7slA7wsDOTCcGnXZuK6oYDHmiT_wxlt0TuyCBGw6zdXuCuUhTQCWbXi');"></div>
+</div>
+</div>
+</header>
+<div class="px-4 py-2 shrink-0">
+<div class="glass-card rounded-3xl p-4 mb-4 relative overflow-hidden">
+<div class="absolute -right-10 -bottom-10 opacity-[0.03] pointer-events-none transform -rotate-12 scale-150">
+<svg fill="white" height="100" viewBox="0 0 200 100" width="200">
+<path d="M20,80 L40,80 L50,60 L80,60 L90,80 L130,80 L140,50 L180,40 L195,20 L160,30 L150,10 L120,30 L100,10 L60,10 L30,40 Z"></path>
+</svg>
+</div>
+<div class="flex items-center justify-between mb-4 px-2 relative z-10">
+<h2 class="text-lg font-bold text-white tracking-wide">January 2025</h2>
+<div class="flex gap-2">
+<button class="size-8 rounded-full flex items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300">
+<span class="material-symbols-outlined" style="font-size: 18px;">chevron_left</span>
+</button>
+<button class="size-8 rounded-full flex items-center justify-center bg-white/5 border border-white/10 text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300">
+<span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="flex justify-between items-start gap-2 overflow-x-auto no-scrollbar pb-1 relative z-10">
+<div class="flex flex-col items-center min-w-[44px]">
+<span class="text-[10px] font-medium uppercase text-text-secondary tracking-wider mb-2">Sun</span>
+<button class="size-10 rounded-full flex items-center justify-center text-sm font-medium text-text-secondary hover:bg-white/10 transition-colors">26</button>
+<div class="flex gap-1 mt-1.5 h-1">
+<div class="size-1 rounded-full bg-accent-emerald"></div>
+</div>
+</div>
+<div class="flex flex-col items-center min-w-[44px]">
+<span class="text-[10px] font-bold uppercase text-white tracking-wider mb-2">Mon</span>
+<button class="size-10 rounded-full bg-white text-black flex items-center justify-center text-sm font-bold shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+<span class="relative z-10">27</span>
+</button>
+<div class="flex gap-1 mt-1.5 h-1">
+<div class="size-1 rounded-full bg-accent-violet"></div>
+<div class="size-1 rounded-full bg-accent-emerald"></div>
+<div class="size-1 rounded-full bg-accent-blue"></div>
+</div>
+</div>
+<div class="flex flex-col items-center min-w-[44px]">
+<span class="text-[10px] font-medium uppercase text-text-secondary tracking-wider mb-2">Tue</span>
+<button class="size-10 rounded-full flex items-center justify-center text-sm font-medium text-white hover:bg-white/10 transition-colors">28</button>
+<div class="flex gap-1 mt-1.5 h-1">
+<div class="size-1 rounded-full bg-accent-blue"></div>
+<div class="size-1 rounded-full bg-accent-emerald"></div>
+</div>
+</div>
+<div class="flex flex-col items-center min-w-[44px]">
+<span class="text-[10px] font-medium uppercase text-text-secondary tracking-wider mb-2">Wed</span>
+<button class="size-10 rounded-full flex items-center justify-center text-sm font-medium text-white hover:bg-white/10 transition-colors">29</button>
+<div class="flex gap-1 mt-1.5 h-1">
+<div class="size-1 rounded-full bg-accent-violet"></div>
+</div>
+</div>
+<div class="flex flex-col items-center min-w-[44px]">
+<span class="text-[10px] font-medium uppercase text-text-secondary tracking-wider mb-2">Thu</span>
+<button class="size-10 rounded-full flex items-center justify-center text-sm font-medium text-white hover:bg-white/10 transition-colors">30</button>
+<div class="flex gap-1 mt-1.5 h-1">
+<div class="size-1 rounded-full bg-accent-emerald"></div>
+</div>
+</div>
+<div class="flex flex-col items-center min-w-[44px]">
+<span class="text-[10px] font-medium uppercase text-text-secondary tracking-wider mb-2">Fri</span>
+<button class="size-10 rounded-full flex items-center justify-center text-sm font-medium text-white hover:bg-white/10 transition-colors">31</button>
+<div class="flex gap-1 mt-1.5 h-1">
+<div class="size-1 rounded-full bg-accent-blue"></div>
+</div>
+</div>
+<div class="flex flex-col items-center min-w-[44px]">
+<span class="text-[10px] font-medium uppercase text-text-secondary tracking-wider mb-2">Sat</span>
+<button class="size-10 rounded-full flex items-center justify-center text-sm font-medium text-text-secondary hover:bg-white/10 transition-colors">1</button>
+<div class="flex gap-1 mt-1.5 h-1"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar pb-32 px-4 space-y-4 z-10">
+<div class="flex items-center justify-between py-2 px-2">
+<h3 class="text-white text-sm font-bold uppercase tracking-widest flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_5px_rgba(255,255,255,0.5)]"></span>
+                    Today's Schedule
+                </h3>
+<span class="text-[10px] text-white mono-badge px-3 py-1 rounded-full font-bold backdrop-blur-sm">3 SESSIONS</span>
+</div>
+<div class="group relative w-full glass-card rounded-2xl p-5 hover:bg-white/5 transition-all duration-300 border border-glass-border">
+<div class="flex justify-between items-start relative z-10 mb-5">
+<div class="flex gap-4 items-center">
+<div class="relative shrink-0">
+<div class="size-14 rounded-full border-2 border-white/20 bg-cover bg-center" data-alt="Portrait of Pedro Sánchez" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDiFd0RugkmkHITvtYvxoVDou8QXoBukpk3faP43Wj8K1hoKhMATwegPvS7p409AvhQloUut9tK-oUdeo4U3KK8O7FpKRjh7UBax8cHc1Zk7pqeaaJ6E2xsXGzETKv4zT6A381S14LqHsUSEBl-bIzbFL2cdYP4-Umpla7u0ubFjIiHXc4kZ7ZiVKlwUbffvvlKTBk08rKCik5RWLnCC1JtA7slA7wsDOTCcGnXZuK6oYDHmiT_wxlt0TuyCBGw6zdXuCuUhTQCWbXi');"></div>
+</div>
+<div class="flex flex-col justify-center">
+<div class="flex items-center gap-2 mb-0.5">
+<span class="text-white font-bold text-xl tracking-tight">16:00 - 17:00</span>
+</div>
+<h4 class="text-white font-bold text-sm tracking-wide">Pedro Sánchez</h4>
+</div>
+</div>
+<button class="size-6 rounded-full flex items-center justify-center text-text-secondary hover:text-white hover:bg-white/10 transition">
+<span class="material-symbols-outlined" style="font-size: 18px;">more_horiz</span>
+</button>
+</div>
+<div class="flex items-center gap-2 relative z-10 pt-4 border-t border-white/10">
+<span class="px-3 py-1 rounded-md bg-accent-violet/10 text-violet-300 text-[10px] font-semibold border border-accent-violet/30 shadow-[0_0_10px_rgba(139,92,246,0.25)] uppercase tracking-wide">
+                        Evaluation
+                    </span>
+<span class="px-3 py-1 rounded-md bg-white/5 text-text-secondary text-[10px] font-semibold border border-white/10 uppercase">
+                        Gym Floor 2
+                    </span>
+</div>
+<div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+</div>
+<div class="group relative w-full glass-card rounded-2xl p-5 hover:bg-white/5 transition-all duration-300 border border-glass-border">
+<div class="flex justify-between items-start relative z-10 mb-5">
+<div class="flex gap-4 items-center">
+<div class="relative shrink-0">
+<div class="size-14 rounded-full border-2 border-white/20 bg-cover bg-center" data-alt="Portrait of Laura Fernandez" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBo2hKfqkJhGw35AmetGDDun1nLeDb5vQN5iwNulQkZ0lDESJb21w86U5MbHCXSOeESNuKWRgy1t7U2aFriAOOtCTWRHxyTse-PeoA4o61SLd7zb52ms2RLRyAQzHGROlO3P8g7fEtHZ38ku43sqkjd1B0oUomHaP5q6Ia22gHzFE4zaZyTva_t9E4SKsz5EYIdBEKjZtfv4CJVOt5Q5CVijG5-Dmw6RWzBvGVy2N88ftnPPI2vnGMc8s89f8oOnB1GuKAiWTgnH5bz');"></div>
+</div>
+<div class="flex flex-col justify-center">
+<div class="flex items-center gap-2 mb-0.5">
+<span class="text-white font-bold text-xl tracking-tight">17:30 - 18:30</span>
+</div>
+<h4 class="text-text-secondary font-medium text-sm tracking-wide">Laura Fernandez</h4>
+</div>
+</div>
+<button class="size-6 rounded-full flex items-center justify-center text-text-secondary hover:text-white hover:bg-white/10 transition">
+<span class="material-symbols-outlined" style="font-size: 18px;">more_horiz</span>
+</button>
+</div>
+<div class="flex items-center gap-2 relative z-10 pt-4 border-t border-white/10">
+<span class="px-3 py-1 rounded-md bg-accent-emerald/10 text-emerald-400 text-[10px] font-semibold border border-accent-emerald/30 shadow-[0_0_10px_rgba(34,197,94,0.25)] uppercase tracking-wide">
+                        Presencial
+                    </span>
+<span class="px-3 py-1 rounded-md bg-white/5 text-text-secondary text-[10px] font-semibold border border-white/10 uppercase">
+                        Zone A
+                    </span>
+</div>
+<div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+</div>
+<div class="group relative w-full glass-card rounded-2xl p-5 hover:bg-white/5 transition-all duration-300 border border-glass-border">
+<div class="flex justify-between items-start relative z-10 mb-5">
+<div class="flex gap-4 items-center">
+<div class="relative shrink-0">
+<div class="size-14 rounded-full border-2 border-white/20 bg-cover bg-center" data-alt="Portrait of Sofia Ruiz" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB42nTVawkzV3XqBFXIXcqmzBJAwZWM6lUVjeHjkjvQjXmeIeG19jBtqj9CcYSHbiht5akXYHLU0YFMxlyvp0PV2QIotKgw9vuEi9WqZS5GJW-HJPirn8TaNbym9rpHvGVyGWY_8ZmNJqEoTBmaDfdk_WgVhIUcwmvWufjEjh22HisJ_7rUztHs0cQuzYRS_9zPw8F8xzdxJuZO4pN9JmMm97jh36MLJtWFPy1ICFzviRnwkxotBAFrUaBBSIAxkGaW_4VowRVeCHpg');"></div>
+<div class="absolute bottom-0 right-0 bg-[#12121A] size-4 rounded-full flex items-center justify-center ring-2 ring-[#12121A]">
+<div class="bg-white size-2.5 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.4)]"></div>
+</div>
+</div>
+<div class="flex flex-col justify-center">
+<div class="flex items-center gap-2 mb-0.5">
+<span class="text-white font-bold text-xl tracking-tight">19:00 - 20:00</span>
+</div>
+<h4 class="text-text-secondary font-medium text-sm tracking-wide">Sofia Ruiz</h4>
+</div>
+</div>
+<button class="size-6 rounded-full flex items-center justify-center text-text-secondary hover:text-white hover:bg-white/10 transition">
+<span class="material-symbols-outlined" style="font-size: 18px;">more_horiz</span>
+</button>
+</div>
+<div class="flex items-center gap-2 relative z-10 pt-4 border-t border-white/10">
+<span class="px-3 py-1 rounded-md bg-accent-blue/10 text-blue-400 text-[10px] font-semibold border border-accent-blue/30 shadow-[0_0_10px_rgba(59,130,246,0.25)] uppercase tracking-wide">
+                        Online
+                    </span>
+<span class="px-3 py-1 rounded-md bg-white/5 text-text-secondary text-[10px] font-semibold border border-white/10 uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">videocam</span> Zoom
+                    </span>
+</div>
+<div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+</div>
+<div class="h-8"></div>
+</div>
+<button class="absolute bottom-28 right-6 z-30 size-14 rounded-full bg-gradient-to-br from-white to-gray-300 shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center justify-center text-black hover:scale-105 transition-all duration-300 group border border-white/40">
+<span class="material-symbols-outlined group-hover:rotate-90 transition-transform duration-300" style="font-size: 28px; font-weight: 600;">add</span>
+</button>
+<div class="absolute bottom-6 left-4 right-4 h-[72px] glass-card rounded-3xl z-40 flex items-center justify-between px-6 border border-white/10 shadow-glass">
+<button class="flex flex-col items-center justify-center gap-1 w-14 group">
+<span class="material-symbols-outlined text-white group-hover:scale-110 transition-transform drop-shadow-[0_0_5px_rgba(255,255,255,0.3)] filled" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="text-[9px] font-bold text-white uppercase tracking-wider">Schedule</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-14 group">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-white transition-colors">group</span>
+<span class="text-[9px] font-bold text-text-secondary group-hover:text-white uppercase tracking-wider transition-colors">Clients</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-14 group">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-white transition-colors">chat_bubble</span>
+<span class="text-[9px] font-bold text-text-secondary group-hover:text-white uppercase tracking-wider transition-colors">Messages</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-14 group">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-white transition-colors">settings</span>
+<span class="text-[9px] font-bold text-text-secondary group-hover:text-white uppercase tracking-wider transition-colors">Settings</span>
+</button>
+</div>
+</div>
+</body></html>

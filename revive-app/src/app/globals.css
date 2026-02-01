@@ -1,0 +1,283 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  /* Glass effect variables */
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
+  --glass-blur: var(--glass-blur-value);
+
+  /* REVIVE accent colors */
+  --color-accent-emerald: var(--accent-emerald);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-violet: var(--accent-violet);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* Light Mode - Clean and professional */
+  --background: #FAFAFA;
+  --foreground: #18181B;
+  --card: #FFFFFF;
+  --card-foreground: #18181B;
+  --popover: #FFFFFF;
+  --popover-foreground: #18181B;
+
+  /* Primary - White/Black monochrome */
+  --primary: #18181B;
+  --primary-foreground: #FFFFFF;
+
+  /* Secondary */
+  --secondary: #F4F4F5;
+  --secondary-foreground: #18181B;
+
+  --muted: #F4F4F5;
+  --muted-foreground: #71717A;
+  --accent: #F4F4F5;
+  --accent-foreground: #18181B;
+
+  /* Semantic colors - Functional accents */
+  --destructive: #EF4444;
+  --warning: #F59E0B;
+  --success: #22C55E;
+
+  /* REVIVE accent colors */
+  --accent-emerald: #22C55E;
+  --accent-blue: #3B82F6;
+  --accent-violet: #8B5CF6;
+
+  --border: #E4E4E7;
+  --input: #E4E4E7;
+  --ring: #18181B;
+
+  /* Liquid Glass effect - Light */
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --glass-blur-value: 12px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  /* Dark Mode - REVIVE Stitch Design */
+  --background: #12121A;
+  --foreground: #FFFFFF;
+  --card: rgba(255, 255, 255, 0.03);
+  --card-foreground: #FFFFFF;
+  --popover: #1A1A24;
+  --popover-foreground: #FFFFFF;
+
+  /* Primary - White accent for dark mode */
+  --primary: #FFFFFF;
+  --primary-foreground: #12121A;
+
+  /* Secondary */
+  --secondary: rgba(255, 255, 255, 0.1);
+  --secondary-foreground: #FFFFFF;
+
+  --muted: rgba(255, 255, 255, 0.05);
+  --muted-foreground: #A1A1AA;
+  --accent: rgba(255, 255, 255, 0.08);
+  --accent-foreground: #FFFFFF;
+
+  /* Semantic colors */
+  --destructive: #EF4444;
+  --warning: #F59E0B;
+  --success: #22C55E;
+
+  /* REVIVE accent colors */
+  --accent-emerald: #22C55E;
+  --accent-blue: #3B82F6;
+  --accent-violet: #8B5CF6;
+
+  --border: rgba(255, 255, 255, 0.15);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: rgba(255, 255, 255, 0.3);
+
+  /* Liquid Glass effect - Dark (Stitch style) */
+  --glass-bg: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur-value: 20px;
+  --glass-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.3);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+/* Glass Card utility */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur-value));
+  -webkit-backdrop-filter: blur(var(--glass-blur-value));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 1rem;
+}
+
+/* Dark mode specific glass card */
+.dark .glass-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.3);
+}
+
+/* REVIVE accent badges with glow */
+.badge-emerald {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.25);
+}
+
+.badge-blue {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.25);
+}
+
+.badge-violet {
+  background-color: rgba(139, 92, 246, 0.1);
+  color: #a78bfa;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.25);
+}
+
+/* Mono badge (black with white border) */
+.mono-badge {
+  background-color: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Ambient lighting effects */
+.ambient-light {
+  position: fixed;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(150px);
+}
+
+.ambient-light-top {
+  top: -20%;
+  left: -20%;
+  width: 80%;
+  height: 50%;
+  background: white;
+  opacity: 0.03;
+}
+
+.ambient-light-bottom {
+  bottom: -10%;
+  right: -10%;
+  width: 60%;
+  height: 40%;
+  background: white;
+  opacity: 0.02;
+}
+
+/* Backward E for REVIVE logo */
+.backward-e {
+  display: inline-block;
+  transform: scaleX(-1);
+}
+
+/* Rhino watermark effect */
+.rhino-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-10deg);
+  width: 120%;
+  height: 60%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 60%);
+  z-index: 0;
+  pointer-events: none;
+  clip-path: polygon(
+    15% 70%, 5% 60%, 20% 30%, 45% 10%,
+    60% 40%, 70% 15%, 85% 50%, 95% 40%,
+    100% 50%, 85% 70%, 95% 85%, 70% 80%,
+    60% 90%, 40% 90%, 30% 70%, 25% 90%
+  );
+  filter: blur(1px);
+}
+
+/* Safe area for mobile bottom tabs */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
