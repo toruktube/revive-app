@@ -40,7 +40,7 @@ export function ResumenStats({ reporte }: ResumenStatsProps) {
 
   return (
     <GlassCardStatic className="mb-4">
-      <h3 className="text-sm font-semibold text-foreground mb-1">{reporte.mes}</h3>
+      <h3 className="text-lg font-antonio font-medium tracking-wide text-foreground mb-1 uppercase">{reporte.mes}</h3>
       <p className="text-xs text-muted-foreground mb-4">Resumen del mes</p>
 
       <div className="grid grid-cols-2 gap-3">
@@ -59,11 +59,11 @@ export function ResumenStats({ reporte }: ResumenStatsProps) {
               >
                 <stat.icon className="w-4 h-4" style={{ color: stat.color }} />
               </div>
-              <span className="text-[10px] text-muted-foreground uppercase tracking-wide">
+              <span className="text-[10px] font-antonio font-normal text-muted-foreground uppercase tracking-wider">
                 {stat.label}
               </span>
             </div>
-            <p className="text-xl font-bold text-foreground">{stat.value}</p>
+            <p className="text-2xl font-antonio font-semibold tracking-wide text-foreground">{stat.value}</p>
             {stat.subvalue && (
               <p className="text-[10px] text-muted-foreground mt-0.5">{stat.subvalue}</p>
             )}

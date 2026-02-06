@@ -36,12 +36,24 @@ export default function FacturacionPage() {
   ]
 
   return (
-    <div className="flex flex-col px-4">
+    <div className="flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-2 mb-4">
+        <div>
+          <h2 className="text-2xl font-antonio font-semibold tracking-wide text-foreground">PAGOS</h2>
+          <p className="text-sm text-muted-foreground">
+            {mockTransacciones.length} transacciones este mes
+          </p>
+        </div>
+      </div>
+
       {/* Monthly Summary */}
-      <ResumenMensualCard resumen={mockResumenMensual} />
+      <div className="px-4">
+        <ResumenMensualCard resumen={mockResumenMensual} />
+      </div>
 
       {/* Filters */}
-      <div className="flex gap-2 mb-4 overflow-x-auto no-scrollbar">
+      <div className="flex gap-2 mb-4 overflow-x-auto no-scrollbar px-4">
         {filtros.map((f) => (
           <button
             key={f.value}
@@ -60,7 +72,7 @@ export default function FacturacionPage() {
       </div>
 
       {/* Transactions Header */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between mb-3 px-4">
         <h3 className="text-sm font-semibold text-foreground">Transacciones</h3>
         <span className="text-xs text-muted-foreground">
           {transaccionesFiltradas.length} {transaccionesFiltradas.length === 1 ? 'transacción' : 'transacciones'}
@@ -69,7 +81,7 @@ export default function FacturacionPage() {
 
       {/* Transactions List */}
       {transaccionesFiltradas.length > 0 ? (
-        <div className="space-y-3">
+        <div className="space-y-3 px-4">
           {transaccionesFiltradas.map((transaccion, index) => (
             <TransaccionCard
               key={transaccion.id}
@@ -79,11 +91,13 @@ export default function FacturacionPage() {
           ))}
         </div>
       ) : (
-        <EmptyState
-          icon={CreditCard}
-          title="Sin transacciones"
-          description="No hay transacciones que coincidan con el filtro seleccionado"
-        />
+        <div className="px-4">
+          <EmptyState
+            icon={CreditCard}
+            title="Sin transacciones"
+            description="No hay transacciones que coincidan con el filtro seleccionado"
+          />
+        </div>
       )}
 
       {/* Spacer */}

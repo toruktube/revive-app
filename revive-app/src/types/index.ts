@@ -33,7 +33,7 @@ export interface ClienteConEstado extends Cliente {
 }
 
 // --- AGENDA / SESIONES ---
-export type TipoSesion = 'presencial' | 'online' | 'evaluacion'
+export type TipoSesion = 'presencial' | 'online'
 export type EstadoSesion = 'programada' | 'completada' | 'cancelada' | 'no_asistio'
 
 export interface SesionCalendario {

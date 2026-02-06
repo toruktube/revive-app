@@ -137,8 +137,7 @@ export function SemanaSelector({ sesiones, selectedDate, onDateSelect }: SemanaS
                     className={cn(
                       'size-1 rounded-full',
                       tipo === 'presencial' && 'bg-[var(--accent-emerald)]',
-                      tipo === 'online' && 'bg-[var(--accent-blue)]',
-                      tipo === 'evaluacion' && 'bg-[var(--accent-violet)]'
+                      tipo === 'online' && 'bg-[var(--accent-blue)]'
                     )}
                   />
                 ))}

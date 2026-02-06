@@ -16,7 +16,7 @@ export function ResumenMensualCard({ resumen }: ResumenMensualProps) {
   return (
     <GlassCardStatic className="mb-4">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-foreground">{resumen.mes}</h2>
+        <h2 className="text-xl font-antonio font-medium tracking-wide text-foreground uppercase">{resumen.mes}</h2>
         <div className={cn(
           'flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium',
           isPositive ? 'bg-[var(--accent-emerald)]/10 text-[var(--accent-emerald)]' : 'bg-destructive/10 text-destructive'
@@ -32,7 +32,7 @@ export function ResumenMensualCard({ resumen }: ResumenMensualProps) {
         <motion.p
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="text-4xl font-bold text-foreground"
+          className="text-5xl font-antonio font-bold tracking-wide text-foreground"
         >
           {resumen.balance.toLocaleString('es-ES')}€
         </motion.p>
@@ -42,13 +42,13 @@ export function ResumenMensualCard({ resumen }: ResumenMensualProps) {
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div className="text-center p-3 rounded-xl bg-[var(--accent-emerald)]/5 border border-[var(--accent-emerald)]/20">
           <p className="text-xs text-muted-foreground mb-1">Ingresos</p>
-          <p className="text-xl font-bold text-[var(--accent-emerald)]">
+          <p className="text-2xl font-antonio font-semibold tracking-wide text-[var(--accent-emerald)]">
             +{resumen.totalIngresos.toLocaleString('es-ES')}€
           </p>
         </div>
         <div className="text-center p-3 rounded-xl bg-destructive/5 border border-destructive/20">
           <p className="text-xs text-muted-foreground mb-1">Gastos</p>
-          <p className="text-xl font-bold text-destructive">
+          <p className="text-2xl font-antonio font-semibold tracking-wide text-destructive">
             -{resumen.totalGastos.toLocaleString('es-ES')}€
           </p>
         </div>

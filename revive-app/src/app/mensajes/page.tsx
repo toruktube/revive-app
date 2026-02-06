@@ -31,7 +31,7 @@ export default function MensajesPage() {
       {/* Header */}
       <div className="flex items-center justify-between py-2 mb-4">
         <div>
-          <h2 className="text-xl font-bold text-foreground">Mensajes</h2>
+          <h2 className="text-2xl font-antonio font-semibold tracking-wide text-foreground">MENSAJES</h2>
           <p className="text-sm text-muted-foreground">
             {totalNoLeidos > 0 ? `${totalNoLeidos} sin leer` : 'Todo al día'}
           </p>

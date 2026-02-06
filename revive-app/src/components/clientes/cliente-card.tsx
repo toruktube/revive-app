@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { TrendingUp, TrendingDown, Minus, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { GlassBadge } from '@/components/glass'
+import { CircularGauge } from '@/components/shared'
 import type { ClienteConEstado } from '@/types'
 
 interface ClienteCardProps {
@@ -91,15 +92,9 @@ export function ClienteCard({ cliente, onClick, index = 0 }: ClienteCardProps) {
           </div>
         </div>
 
-        {/* Adherencia */}
-        <div className="flex flex-col items-end gap-1">
-          <span className={cn(
-            'text-lg font-bold',
-            (cliente.adherenciaPromedio || 0) >= 80 ? 'text-[var(--accent-emerald)]' :
-            (cliente.adherenciaPromedio || 0) >= 60 ? 'text-warning' : 'text-destructive'
-          )}>
-            {cliente.adherenciaPromedio || 0}%
-          </span>
+        {/* Adherencia Gauge */}
+        <div className="flex items-center gap-2">
+          <CircularGauge value={cliente.adherenciaPromedio || 0} size="sm" />
           <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:translate-x-1 transition-transform" />
         </div>
       </div>

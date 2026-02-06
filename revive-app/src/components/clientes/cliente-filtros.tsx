@@ -54,9 +54,9 @@ export function ClienteFiltros({
       </div>
 
       {/* Filters */}
-      <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-        {/* Estado Filter */}
-        <div className="flex gap-1">
+      <div className="flex gap-3 items-center">
+        {/* Estado Filter - Buttons */}
+        <div className="flex gap-1 flex-1">
           {estadoOptions.map((option) => (
             <button
               key={option.value}
@@ -74,26 +74,24 @@ export function ClienteFiltros({
           ))}
         </div>
 
-        <div className="w-px bg-white/10 mx-1" />
-
-        {/* Tipo Filter */}
-        <div className="flex gap-1">
+        {/* Tipo Filter - Dropdown */}
+        <select
+          value={filtroTipo}
+          onChange={(e) => onFiltroTipoChange(e.target.value)}
+          className={cn(
+            'px-3 py-1.5 rounded-xl text-xs font-medium',
+            'bg-white/5 border border-white/10',
+            'text-foreground',
+            'focus:outline-none focus:border-white/30',
+            'transition-colors'
+          )}
+        >
           {tipoOptions.map((option) => (
-            <button
-              key={option.value}
-              onClick={() => onFiltroTipoChange(option.value)}
-              className={cn(
-                'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap',
-                'border transition-all duration-200',
-                filtroTipo === option.value
-                  ? 'bg-white text-black border-white'
-                  : 'bg-white/5 text-muted-foreground border-white/10 hover:bg-white/10 hover:text-foreground'
-              )}
-            >
+            <option key={option.value} value={option.value}>
               {option.label}
-            </button>
+            </option>
           ))}
-        </div>
+        </select>
       </div>
     </div>
   )

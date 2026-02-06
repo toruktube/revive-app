@@ -1,14 +1,19 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Saira_Condensed, Antonio } from 'next/font/google'
 import { ThemeProvider } from '@/providers/theme-provider'
-import { Header } from '@/components/shared/header'
-import { BottomTabs } from '@/components/shared/bottom-tabs'
+import { AppShell } from '@/components/shared/app-shell'
 import './globals.css'
 
-const inter = Inter({
-  variable: '--font-inter',
+const sairaCondensed = Saira_Condensed({
+  variable: '--font-saira',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+})
+
+const antonio = Antonio({
+  variable: '--font-antonio',
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700'],
 })
 
 export const metadata: Metadata = {
@@ -41,32 +46,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body className={`${inter.variable} antialiased font-sans`}>
+      <body className={`${sairaCondensed.variable} ${antonio.variable} antialiased font-sans`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          {/* Ambient lighting effects */}
-          <div className="dark:block hidden">
-            <div className="ambient-light ambient-light-top" />
-            <div className="ambient-light ambient-light-bottom" />
-          </div>
-
-          {/* Rhino watermark */}
-          <div className="fixed top-[35%] left-0 w-full h-full pointer-events-none z-0 opacity-100 mix-blend-overlay dark:block hidden">
-            <div className="rhino-watermark" />
-          </div>
-
-          {/* Main app container */}
-          <div className="relative z-10 flex flex-col h-screen overflow-hidden">
-            <Header />
-            <main className="flex-1 overflow-y-auto no-scrollbar pb-32">
-              {children}
-            </main>
-            <BottomTabs />
-          </div>
+          <AppShell>{children}</AppShell>
         </ThemeProvider>
       </body>
     </html>

@@ -35,7 +35,7 @@ export default function AjustesPage() {
     <div className="flex flex-col px-4">
       {/* Header */}
       <div className="py-2 mb-4">
-        <h2 className="text-xl font-bold text-foreground">Ajustes</h2>
+        <h2 className="text-2xl font-antonio font-semibold tracking-wide text-foreground">AJUSTES</h2>
         <p className="text-sm text-muted-foreground">Configuración de la app</p>
       </div>
 

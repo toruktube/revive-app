@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MoreHorizontal, Video } from 'lucide-react'
+import { MoreHorizontal, Video, FileText } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { GlassBadge } from '@/components/glass'
 import type { SesionCalendario } from '@/types'
@@ -9,14 +9,13 @@ import type { SesionCalendario } from '@/types'
 interface SesionCardProps {
   sesion: SesionCalendario
   onClick?: () => void
+  onCreateReport?: () => void
   index?: number
 }
 
-export function SesionCard({ sesion, onClick, index = 0 }: SesionCardProps) {
+export function SesionCard({ sesion, onClick, onCreateReport, index = 0 }: SesionCardProps) {
   const getTipoBadge = () => {
     switch (sesion.tipo) {
-      case 'evaluacion':
-        return <GlassBadge variant="violet">Evaluación</GlassBadge>
       case 'presencial':
         return <GlassBadge variant="emerald">Presencial</GlassBadge>
       case 'online':
@@ -69,13 +68,29 @@ export function SesionCard({ sesion, onClick, index = 0 }: SesionCardProps) {
           </div>
         </div>
 
-        {/* More button */}
-        <button
-          onClick={(e) => { e.stopPropagation() }}
-          className="size-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/10 transition"
-        >
-          <MoreHorizontal className="w-4 h-4" />
-        </button>
+        {/* Action buttons */}
+        <div className="flex items-center gap-1">
+          {/* Create Report button */}
+          {onCreateReport && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onCreateReport()
+              }}
+              className="size-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-emerald-400 hover:bg-emerald-500/10 transition"
+              title="Crear reporte"
+            >
+              <FileText className="w-4 h-4" />
+            </button>
+          )}
+          {/* More button */}
+          <button
+            onClick={(e) => { e.stopPropagation() }}
+            className="size-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/10 transition"
+          >
+            <MoreHorizontal className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       {/* Badges */}

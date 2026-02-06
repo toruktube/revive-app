@@ -40,7 +40,7 @@ export default function ClientesPage() {
       {/* Header */}
       <div className="flex items-center justify-between py-2 mb-4">
         <div>
-          <h2 className="text-xl font-bold text-foreground">Clientes</h2>
+          <h2 className="text-2xl font-antonio font-semibold tracking-wide text-foreground">CLIENTES</h2>
           <p className="text-sm text-muted-foreground">
             {clientesActivos} activos de {mockClientes.length} total
           </p>
