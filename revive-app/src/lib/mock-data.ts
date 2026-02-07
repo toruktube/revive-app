@@ -53,6 +53,54 @@ const monday = getMonday(today)
 
 export const mockClientes: ClienteConEstado[] = [
   {
+    id: '11',
+    nombre: 'Alejandro',
+    apellidos: 'Gutiérrez',
+    email: 'alejandro.gutierrez@email.com',
+    telefono: '670381225',
+    avatar_url: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=150',
+    tipo: 'presencial',
+    estado: 'activo',
+    fecha_inicio: '2024-09-01',
+    objetivo_principal: 'Ganancia muscular',
+    nivel: 'medio',
+    plan_actual: 'Push/Pull/Legs - Hipertrofia',
+    notas_privadas: 'Trabaja turnos rotativos. Prefiere sesiones por la tarde. Muy comprometido con la dieta.',
+    created_at: '2024-09-01T10:00:00Z',
+    updated_at: '2025-02-05T10:00:00Z',
+    adherenciaPromedio: 88,
+    tendencia: 'subiendo',
+    alertasActivas: 0,
+    estadoPago: 'pagado',
+    tipoPlanPago: 'mensual',
+    proximaSesion: formatDate(addDays(monday, 1)),
+    proximoPago: formatDate(addDays(today, 12)),
+  },
+  {
+    id: '12',
+    nombre: 'Laura',
+    apellidos: 'Pereda',
+    email: 'laura.pereda@email.com',
+    telefono: '664846927',
+    avatar_url: 'https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?w=150',
+    tipo: 'presencial',
+    estado: 'activo',
+    fecha_inicio: '2024-11-15',
+    objetivo_principal: 'Tonificación y pérdida de grasa',
+    nivel: 'inicial',
+    plan_actual: 'Full Body - Definición',
+    notas_privadas: 'Empezó con el objetivo de perder peso. Ya ha bajado 4kg. Muy motivada.',
+    created_at: '2024-11-15T10:00:00Z',
+    updated_at: '2025-02-06T14:00:00Z',
+    adherenciaPromedio: 82,
+    tendencia: 'subiendo',
+    alertasActivas: 0,
+    estadoPago: 'pagado',
+    tipoPlanPago: 'mensual',
+    proximaSesion: formatDate(addDays(monday, 2)),
+    proximoPago: formatDate(addDays(today, 8)),
+  },
+  {
     id: '1',
     nombre: 'María',
     apellidos: 'García López',
@@ -71,6 +119,7 @@ export const mockClientes: ClienteConEstado[] = [
     tendencia: 'subiendo',
     alertasActivas: 0,
     estadoPago: 'pagado',
+    tipoPlanPago: 'mensual',
     proximaSesion: formatDate(addDays(monday, 1)),
     proximoPago: formatDate(addDays(today, 15)),
   },
@@ -93,6 +142,7 @@ export const mockClientes: ClienteConEstado[] = [
     tendencia: 'bajando',
     alertasActivas: 2,
     estadoPago: 'vencido',
+    tipoPlanPago: 'mensual',
     proximaSesion: formatDate(addDays(monday, 0)),
     proximoPago: formatDate(addDays(today, -5)),
   },
@@ -115,6 +165,7 @@ export const mockClientes: ClienteConEstado[] = [
     tendencia: 'estable',
     alertasActivas: 0,
     estadoPago: 'pagado',
+    tipoPlanPago: 'trimestral',
     proximaSesion: formatDate(addDays(monday, 2)),
     proximoPago: formatDate(addDays(today, 10)),
   },
@@ -137,6 +188,7 @@ export const mockClientes: ClienteConEstado[] = [
     tendencia: 'subiendo',
     alertasActivas: 0,
     estadoPago: 'pagado',
+    tipoPlanPago: 'semestral',
     proximaSesion: formatDate(addDays(monday, 0)),
     proximoPago: formatDate(addDays(today, 20)),
   },
@@ -159,6 +211,7 @@ export const mockClientes: ClienteConEstado[] = [
     tendencia: 'estable',
     alertasActivas: 1,
     estadoPago: 'pendiente',
+    tipoPlanPago: 'mensual',
     proximaSesion: formatDate(addDays(monday, 3)),
     proximoPago: formatDate(addDays(today, 2)),
   },
@@ -182,6 +235,7 @@ export const mockClientes: ClienteConEstado[] = [
     tendencia: 'estable',
     alertasActivas: 0,
     estadoPago: 'pagado',
+    tipoPlanPago: 'mensual',
     proximoPago: formatDate(addDays(today, 25)),
   },
   {
@@ -203,6 +257,7 @@ export const mockClientes: ClienteConEstado[] = [
     tendencia: 'subiendo',
     alertasActivas: 0,
     estadoPago: 'pagado',
+    tipoPlanPago: 'trimestral',
     proximaSesion: formatDate(addDays(monday, 4)),
     proximoPago: formatDate(addDays(today, 8)),
   },
@@ -225,6 +280,7 @@ export const mockClientes: ClienteConEstado[] = [
     tendencia: 'bajando',
     alertasActivas: 3,
     estadoPago: 'vencido',
+    tipoPlanPago: 'mensual',
     proximaSesion: formatDate(addDays(monday, 1)),
     proximoPago: formatDate(addDays(today, -10)),
   },
@@ -247,6 +303,7 @@ export const mockClientes: ClienteConEstado[] = [
     tendencia: 'subiendo',
     alertasActivas: 0,
     estadoPago: 'pagado',
+    tipoPlanPago: 'anual',
     proximaSesion: formatDate(addDays(monday, 2)),
     proximoPago: formatDate(addDays(today, 12)),
   },
@@ -269,6 +326,7 @@ export const mockClientes: ClienteConEstado[] = [
     tendencia: 'estable',
     alertasActivas: 0,
     estadoPago: 'pagado',
+    tipoPlanPago: 'semestral',
     proximaSesion: formatDate(addDays(monday, 0)),
     proximoPago: formatDate(addDays(today, 5)),
   },
@@ -280,29 +338,37 @@ export const mockClientes: ClienteConEstado[] = [
 
 export const mockSesiones: SesionCalendario[] = [
   // Lunes
-  { id: 's1', cliente_id: '2', cliente_nombre: 'Carlos', cliente_apellidos: 'Rodríguez', cliente_avatar: mockClientes[1].avatar_url, fecha: formatDate(addDays(monday, 0)), hora_inicio: '07:00', hora_fin: '08:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
-  { id: 's2', cliente_id: '4', cliente_nombre: 'Pedro', cliente_apellidos: 'López', cliente_avatar: mockClientes[3].avatar_url, fecha: formatDate(addDays(monday, 0)), hora_inicio: '08:30', hora_fin: '10:00', tipo: 'online', estado: 'programada', ubicacion: 'Club Revive' },
-  { id: 's3', cliente_id: '10', cliente_nombre: 'David', cliente_apellidos: 'Serrano', cliente_avatar: mockClientes[9].avatar_url, fecha: formatDate(addDays(monday, 0)), hora_inicio: '11:00', hora_fin: '12:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's1', cliente_id: '2', cliente_nombre: 'Carlos', cliente_apellidos: 'Rodríguez', cliente_avatar: mockClientes[5].avatar_url, fecha: formatDate(addDays(monday, 0)), hora_inicio: '07:00', hora_fin: '08:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's2', cliente_id: '4', cliente_nombre: 'Pedro', cliente_apellidos: 'López', cliente_avatar: mockClientes[5].avatar_url, fecha: formatDate(addDays(monday, 0)), hora_inicio: '08:30', hora_fin: '10:00', tipo: 'online', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's3', cliente_id: '10', cliente_nombre: 'David', cliente_apellidos: 'Serrano', cliente_avatar: mockClientes[1].avatar_url, fecha: formatDate(addDays(monday, 0)), hora_inicio: '11:00', hora_fin: '12:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
   // Martes
-  { id: 's4', cliente_id: '8', cliente_nombre: 'Miguel', cliente_apellidos: 'Herrera', cliente_avatar: mockClientes[7].avatar_url, fecha: formatDate(addDays(monday, 1)), hora_inicio: '07:00', hora_fin: '08:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's4', cliente_id: '8', cliente_nombre: 'Miguel', cliente_apellidos: 'Herrera', cliente_avatar: mockClientes[1].avatar_url, fecha: formatDate(addDays(monday, 1)), hora_inicio: '07:00', hora_fin: '08:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
   { id: 's5', cliente_id: '1', cliente_nombre: 'María', cliente_apellidos: 'García', cliente_avatar: mockClientes[0].avatar_url, fecha: formatDate(addDays(monday, 1)), hora_inicio: '10:00', hora_fin: '11:00', tipo: 'online', estado: 'programada' },
-  { id: 's6', cliente_id: '5', cliente_nombre: 'Ana', cliente_apellidos: 'Fernández', cliente_avatar: mockClientes[4].avatar_url, fecha: formatDate(addDays(monday, 1)), hora_inicio: '17:00', hora_fin: '18:00', tipo: 'online', estado: 'programada' },
+  { id: 's6', cliente_id: '5', cliente_nombre: 'Ana', cliente_apellidos: 'Fernández', cliente_avatar: mockClientes[0].avatar_url, fecha: formatDate(addDays(monday, 1)), hora_inicio: '17:00', hora_fin: '18:00', tipo: 'online', estado: 'programada' },
   // Miércoles
-  { id: 's7', cliente_id: '2', cliente_nombre: 'Carlos', cliente_apellidos: 'Rodríguez', cliente_avatar: mockClientes[1].avatar_url, fecha: formatDate(addDays(monday, 2)), hora_inicio: '07:00', hora_fin: '08:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
-  { id: 's8', cliente_id: '3', cliente_nombre: 'Laura', cliente_apellidos: 'Martínez', cliente_avatar: mockClientes[2].avatar_url, fecha: formatDate(addDays(monday, 2)), hora_inicio: '10:00', hora_fin: '11:00', tipo: 'online', estado: 'programada' },
-  { id: 's9', cliente_id: '9', cliente_nombre: 'Elena', cliente_apellidos: 'Navarro', cliente_avatar: mockClientes[8].avatar_url, fecha: formatDate(addDays(monday, 2)), hora_inicio: '12:00', hora_fin: '13:00', tipo: 'online', estado: 'programada' },
+  { id: 's7', cliente_id: '2', cliente_nombre: 'Carlos', cliente_apellidos: 'Rodríguez', cliente_avatar: mockClientes[5].avatar_url, fecha: formatDate(addDays(monday, 2)), hora_inicio: '07:00', hora_fin: '08:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's8', cliente_id: '3', cliente_nombre: 'Laura', cliente_apellidos: 'Martínez', cliente_avatar: mockClientes[0].avatar_url, fecha: formatDate(addDays(monday, 2)), hora_inicio: '10:00', hora_fin: '11:00', tipo: 'online', estado: 'programada' },
+  { id: 's9', cliente_id: '9', cliente_nombre: 'Elena', cliente_apellidos: 'Navarro', cliente_avatar: mockClientes[0].avatar_url, fecha: formatDate(addDays(monday, 2)), hora_inicio: '12:00', hora_fin: '13:00', tipo: 'online', estado: 'programada' },
   // Jueves
-  { id: 's10', cliente_id: '8', cliente_nombre: 'Miguel', cliente_apellidos: 'Herrera', cliente_avatar: mockClientes[7].avatar_url, fecha: formatDate(addDays(monday, 3)), hora_inicio: '07:00', hora_fin: '08:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
-  { id: 's11', cliente_id: '5', cliente_nombre: 'Ana', cliente_apellidos: 'Fernández', cliente_avatar: mockClientes[4].avatar_url, fecha: formatDate(addDays(monday, 3)), hora_inicio: '17:00', hora_fin: '18:00', tipo: 'online', estado: 'cancelada', notas: 'Canceló por trabajo' },
-  { id: 's12', cliente_id: '10', cliente_nombre: 'David', cliente_apellidos: 'Serrano', cliente_avatar: mockClientes[9].avatar_url, fecha: formatDate(addDays(monday, 3)), hora_inicio: '18:30', hora_fin: '19:30', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's10', cliente_id: '8', cliente_nombre: 'Miguel', cliente_apellidos: 'Herrera', cliente_avatar: mockClientes[1].avatar_url, fecha: formatDate(addDays(monday, 3)), hora_inicio: '07:00', hora_fin: '08:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's11', cliente_id: '5', cliente_nombre: 'Ana', cliente_apellidos: 'Fernández', cliente_avatar: mockClientes[0].avatar_url, fecha: formatDate(addDays(monday, 3)), hora_inicio: '17:00', hora_fin: '18:00', tipo: 'online', estado: 'cancelada', notas: 'Canceló por trabajo' },
+  { id: 's12', cliente_id: '10', cliente_nombre: 'David', cliente_apellidos: 'Serrano', cliente_avatar: mockClientes[1].avatar_url, fecha: formatDate(addDays(monday, 3)), hora_inicio: '18:30', hora_fin: '19:30', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
   // Viernes
-  { id: 's13', cliente_id: '2', cliente_nombre: 'Carlos', cliente_apellidos: 'Rodríguez', cliente_avatar: mockClientes[1].avatar_url, fecha: formatDate(addDays(monday, 4)), hora_inicio: '07:00', hora_fin: '08:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
-  { id: 's14', cliente_id: '4', cliente_nombre: 'Pedro', cliente_apellidos: 'López', cliente_avatar: mockClientes[3].avatar_url, fecha: formatDate(addDays(monday, 4)), hora_inicio: '08:30', hora_fin: '10:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
-  { id: 's15', cliente_id: '7', cliente_nombre: 'Sofía', cliente_apellidos: 'Díaz', cliente_avatar: mockClientes[6].avatar_url, fecha: formatDate(addDays(monday, 4)), hora_inicio: '12:00', hora_fin: '13:00', tipo: 'online', estado: 'programada' },
-  { id: 's16', cliente_id: '3', cliente_nombre: 'Laura', cliente_apellidos: 'Martínez', cliente_avatar: mockClientes[2].avatar_url, fecha: formatDate(addDays(monday, 4)), hora_inicio: '16:00', hora_fin: '17:00', tipo: 'online', estado: 'programada' },
+  { id: 's13', cliente_id: '2', cliente_nombre: 'Carlos', cliente_apellidos: 'Rodríguez', cliente_avatar: mockClientes[5].avatar_url, fecha: formatDate(addDays(monday, 4)), hora_inicio: '07:00', hora_fin: '08:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's14', cliente_id: '4', cliente_nombre: 'Pedro', cliente_apellidos: 'López', cliente_avatar: mockClientes[5].avatar_url, fecha: formatDate(addDays(monday, 4)), hora_inicio: '08:30', hora_fin: '10:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's15', cliente_id: '7', cliente_nombre: 'Sofía', cliente_apellidos: 'Díaz', cliente_avatar: mockClientes[0].avatar_url, fecha: formatDate(addDays(monday, 4)), hora_inicio: '12:00', hora_fin: '13:00', tipo: 'online', estado: 'programada' },
+  { id: 's16', cliente_id: '3', cliente_nombre: 'Laura', cliente_apellidos: 'Martínez', cliente_avatar: mockClientes[0].avatar_url, fecha: formatDate(addDays(monday, 4)), hora_inicio: '16:00', hora_fin: '17:00', tipo: 'online', estado: 'programada' },
   // Sábado
-  { id: 's17', cliente_id: '4', cliente_nombre: 'Pedro', cliente_apellidos: 'López', cliente_avatar: mockClientes[3].avatar_url, fecha: formatDate(addDays(monday, 5)), hora_inicio: '09:00', hora_fin: '10:30', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive', notas: 'Sesión extra competición' },
+  { id: 's17', cliente_id: '4', cliente_nombre: 'Pedro', cliente_apellidos: 'López', cliente_avatar: mockClientes[5].avatar_url, fecha: formatDate(addDays(monday, 5)), hora_inicio: '09:00', hora_fin: '10:30', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive', notas: 'Sesión extra competición' },
   { id: 's18', cliente_id: '1', cliente_nombre: 'María', cliente_apellidos: 'García', cliente_avatar: mockClientes[0].avatar_url, fecha: formatDate(addDays(monday, 5)), hora_inicio: '11:00', hora_fin: '12:00', tipo: 'online', estado: 'programada', notas: 'Evaluación mensual' },
+  // Alejandro Gutiérrez - sesiones
+  { id: 's19', cliente_id: '11', cliente_nombre: 'Alejandro', cliente_apellidos: 'Gutiérrez', cliente_avatar: mockClientes[0].avatar_url, fecha: formatDate(addDays(monday, 1)), hora_inicio: '18:00', hora_fin: '19:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's20', cliente_id: '11', cliente_nombre: 'Alejandro', cliente_apellidos: 'Gutiérrez', cliente_avatar: mockClientes[0].avatar_url, fecha: formatDate(addDays(monday, 3)), hora_inicio: '18:00', hora_fin: '19:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's21', cliente_id: '11', cliente_nombre: 'Alejandro', cliente_apellidos: 'Gutiérrez', cliente_avatar: mockClientes[0].avatar_url, fecha: formatDate(addDays(monday, 5)), hora_inicio: '10:00', hora_fin: '11:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  // Laura Pereda - sesiones
+  { id: 's22', cliente_id: '12', cliente_nombre: 'Laura', cliente_apellidos: 'Pereda', cliente_avatar: mockClientes[1].avatar_url, fecha: formatDate(addDays(monday, 0)), hora_inicio: '09:00', hora_fin: '10:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's23', cliente_id: '12', cliente_nombre: 'Laura', cliente_apellidos: 'Pereda', cliente_avatar: mockClientes[1].avatar_url, fecha: formatDate(addDays(monday, 2)), hora_inicio: '09:00', hora_fin: '10:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
+  { id: 's24', cliente_id: '12', cliente_nombre: 'Laura', cliente_apellidos: 'Pereda', cliente_avatar: mockClientes[1].avatar_url, fecha: formatDate(addDays(monday, 4)), hora_inicio: '09:00', hora_fin: '10:00', tipo: 'presencial', estado: 'programada', ubicacion: 'Club Revive' },
 ]
 
 // ==========================================
@@ -321,6 +387,9 @@ export const mockTransacciones: Transaccion[] = [
   { id: 't8', cliente_id: '8', cliente_nombre: 'Miguel Herrera', tipo: 'ingreso', monto: 150, fecha: '2025-01-01', fecha_vencimiento: '2025-01-05', estado: 'vencido', concepto: 'Mensualidad Enero 2025' },
   { id: 't9', cliente_id: '9', cliente_nombre: 'Elena Navarro', tipo: 'ingreso', monto: 120, fecha: '2025-01-04', estado: 'pagado', metodo: 'transferencia', concepto: 'Mensualidad Enero 2025' },
   { id: 't10', cliente_id: '10', cliente_nombre: 'David Serrano', tipo: 'ingreso', monto: 180, fecha: '2025-01-02', estado: 'pagado', metodo: 'tarjeta', concepto: 'Plan Alto Rendimiento Enero' },
+  // Alejandro y Laura - pagos
+  { id: 't14', cliente_id: '11', cliente_nombre: 'Alejandro Gutiérrez', tipo: 'ingreso', monto: 120, fecha: '2025-02-01', estado: 'pagado', metodo: 'bizum', concepto: 'Mensualidad Febrero 2025' },
+  { id: 't15', cliente_id: '12', cliente_nombre: 'Laura Pereda', tipo: 'ingreso', monto: 100, fecha: '2025-02-03', estado: 'pagado', metodo: 'transferencia', concepto: 'Mensualidad Febrero 2025' },
   // Gastos
   { id: 't11', tipo: 'gasto', monto: 50, fecha: '2025-01-10', estado: 'pagado', metodo: 'tarjeta', concepto: 'Material de entrenamiento' },
   { id: 't12', tipo: 'gasto', monto: 200, fecha: '2025-01-15', estado: 'pagado', metodo: 'transferencia', concepto: 'Alquiler espacio gimnasio' },
@@ -350,6 +419,10 @@ export const mockRutinas: RutinaEntrenamiento[] = [
     duracion: '4 semanas',
     nivel: 'intermedio',
     objetivo: 'perdida_grasa',
+    clientes_asignados: [
+      { id: '1', nombre: 'María', apellidos: 'García López', avatar_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
+      { id: '12', nombre: 'Laura', apellidos: 'Pereda', avatar_url: 'https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?w=150' },
+    ],
     created_at: '2025-01-01T10:00:00Z',
     dias: [
       {
@@ -382,6 +455,10 @@ export const mockRutinas: RutinaEntrenamiento[] = [
     duracion: '8 semanas',
     nivel: 'avanzado',
     objetivo: 'ganancia_muscular',
+    clientes_asignados: [
+      { id: '11', nombre: 'Alejandro', apellidos: 'Gutiérrez', avatar_url: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=150' },
+      { id: '2', nombre: 'Carlos', apellidos: 'Rodríguez Martín', avatar_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' },
+    ],
     created_at: '2024-12-01T10:00:00Z',
     dias: [
       {
@@ -424,6 +501,9 @@ export const mockRutinas: RutinaEntrenamiento[] = [
     duracion: '12 semanas',
     nivel: 'avanzado',
     objetivo: 'resistencia',
+    clientes_asignados: [
+      { id: '7', nombre: 'Sofía', apellidos: 'Díaz Moreno', avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150' },
+    ],
     created_at: '2025-01-05T10:00:00Z',
     dias: [
       {
@@ -456,6 +536,9 @@ export const mockRutinas: RutinaEntrenamiento[] = [
     duracion: '6 semanas',
     nivel: 'principiante',
     objetivo: 'tonificacion',
+    clientes_asignados: [
+      { id: '3', nombre: 'Laura', apellidos: 'Martínez Sánchez', avatar_url: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' },
+    ],
     created_at: '2025-01-15T10:00:00Z',
     dias: [
       {
@@ -549,7 +632,7 @@ export const mockConversaciones: Conversacion[] = [
     ]
   },
   {
-    id: 'conv2', cliente_id: '2', cliente_nombre: 'Carlos', cliente_apellidos: 'Rodríguez', cliente_avatar: mockClientes[1].avatar_url,
+    id: 'conv2', cliente_id: '2', cliente_nombre: 'Carlos', cliente_apellidos: 'Rodríguez', cliente_avatar: mockClientes[5].avatar_url,
     ultimo_mensaje: 'Carlos, ¿todo bien? No viniste a la sesión de hoy.', ultimo_mensaje_hora: formatISO(hace3h), no_leidos: 0,
     mensajes: [
       { id: 'm5', conversacion_id: 'conv2', contenido: 'Hola Carlos, ¿cómo vas con la dieta esta semana?', direccion: 'enviado', estado: 'leido', hora: formatISO(ayer) },
@@ -559,7 +642,7 @@ export const mockConversaciones: Conversacion[] = [
     ]
   },
   {
-    id: 'conv3', cliente_id: '4', cliente_nombre: 'Pedro', cliente_apellidos: 'López', cliente_avatar: mockClientes[3].avatar_url,
+    id: 'conv3', cliente_id: '4', cliente_nombre: 'Pedro', cliente_apellidos: 'López', cliente_avatar: mockClientes[5].avatar_url,
     ultimo_mensaje: '¡Vamos con todo! La competición está cerca 🏆', ultimo_mensaje_hora: formatISO(ayer), no_leidos: 1,
     mensajes: [
       { id: 'm9', conversacion_id: 'conv3', contenido: 'Pedro, mañana hacemos la sesión de posing extra. 9:00 en el gimnasio.', direccion: 'enviado', estado: 'leido', hora: formatISO(hace2d) },
@@ -567,7 +650,7 @@ export const mockConversaciones: Conversacion[] = [
     ]
   },
   {
-    id: 'conv4', cliente_id: '7', cliente_nombre: 'Sofía', cliente_apellidos: 'Díaz', cliente_avatar: mockClientes[6].avatar_url,
+    id: 'conv4', cliente_id: '7', cliente_nombre: 'Sofía', cliente_apellidos: 'Díaz', cliente_avatar: mockClientes[0].avatar_url,
     ultimo_mensaje: 'Completé los 18km hoy 🏃‍♀️ Ritmo 5:28/km', ultimo_mensaje_hora: formatISO(ayer), no_leidos: 2,
     mensajes: [
       { id: 'm11', conversacion_id: 'conv4', contenido: 'Sofía, ¿cómo fue la tirada larga?', direccion: 'enviado', estado: 'leido', hora: formatISO(hace2d) },
@@ -576,7 +659,7 @@ export const mockConversaciones: Conversacion[] = [
     ]
   },
   {
-    id: 'conv5', cliente_id: '8', cliente_nombre: 'Miguel', cliente_apellidos: 'Herrera', cliente_avatar: mockClientes[7].avatar_url,
+    id: 'conv5', cliente_id: '8', cliente_nombre: 'Miguel', cliente_apellidos: 'Herrera', cliente_avatar: mockClientes[1].avatar_url,
     ultimo_mensaje: 'Miguel, es importante que hablemos. ¿Podemos agendar una llamada?', ultimo_mensaje_hora: formatISO(hace2d), no_leidos: 0,
     mensajes: [
       { id: 'm14', conversacion_id: 'conv5', contenido: 'Hola Miguel, no te vi en el gimnasio. ¿Todo bien?', direccion: 'enviado', estado: 'entregado', hora: formatISO(new Date(hace2d.getTime() - 2 * 60 * 60000)) },
@@ -600,33 +683,71 @@ export const mockPlantillas: PlantillaMensaje[] = [
 export const mockNotasSesion: NotaSesion[] = [
   {
     id: 'n1', cliente_id: '1', cliente_nombre: 'María', cliente_apellidos: 'García', cliente_avatar: mockClientes[0].avatar_url,
-    fecha: formatDate(addDays(today, -1)), energia: 4, puntualidad: 5, progreso: 4,
+    fecha: formatDate(addDays(today, -1)), energia: 4, puntualidad: 5, progreso: 4, estado_emocional: 5,
     comentario: 'Excelente sesión. María está muy motivada y se nota el progreso en sentadillas. Subimos peso en press banca.',
     created_at: formatISO(addDays(today, -1))
   },
   {
-    id: 'n2', cliente_id: '2', cliente_nombre: 'Carlos', cliente_apellidos: 'Rodríguez', cliente_avatar: mockClientes[1].avatar_url,
-    fecha: formatDate(addDays(today, -1)), energia: 2, puntualidad: 3, progreso: 2,
+    id: 'n2', cliente_id: '2', cliente_nombre: 'Carlos', cliente_apellidos: 'Rodríguez', cliente_avatar: mockClientes[5].avatar_url,
+    fecha: formatDate(addDays(today, -1)), energia: 2, puntualidad: 3, progreso: 2, estado_emocional: 2,
     comentario: 'Carlos llegó cansado y desmotivado. No cumplió la dieta esta semana. Hay que hablar seriamente sobre compromiso.',
     created_at: formatISO(addDays(today, -1))
   },
   {
-    id: 'n3', cliente_id: '4', cliente_nombre: 'Pedro', cliente_apellidos: 'López', cliente_avatar: mockClientes[3].avatar_url,
-    fecha: formatDate(addDays(today, -2)), energia: 5, puntualidad: 5, progreso: 5,
+    id: 'n3', cliente_id: '4', cliente_nombre: 'Pedro', cliente_apellidos: 'López', cliente_avatar: mockClientes[5].avatar_url,
+    fecha: formatDate(addDays(today, -2)), energia: 5, puntualidad: 5, progreso: 5, estado_emocional: 5,
     comentario: 'Pedro en modo competición. Todos los levantamientos con buena técnica. Peso corporal estable en 78.5kg.',
     created_at: formatISO(addDays(today, -2))
   },
   {
-    id: 'n4', cliente_id: '7', cliente_nombre: 'Sofía', cliente_apellidos: 'Díaz', cliente_avatar: mockClientes[6].avatar_url,
-    fecha: formatDate(addDays(today, -3)), energia: 5, puntualidad: 5, progreso: 5,
+    id: 'n4', cliente_id: '7', cliente_nombre: 'Sofía', cliente_apellidos: 'Díaz', cliente_avatar: mockClientes[0].avatar_url,
+    fecha: formatDate(addDays(today, -3)), energia: 5, puntualidad: 5, progreso: 5, estado_emocional: 4,
     comentario: 'Sofía completó 18km sin parar. Ritmo constante de 5:30/km. Preparación para maratón va según plan.',
     created_at: formatISO(addDays(today, -3))
   },
   {
-    id: 'n5', cliente_id: '10', cliente_nombre: 'David', cliente_apellidos: 'Serrano', cliente_avatar: mockClientes[9].avatar_url,
-    fecha: formatDate(addDays(today, -2)), energia: 4, puntualidad: 5, progreso: 4,
+    id: 'n5', cliente_id: '10', cliente_nombre: 'David', cliente_apellidos: 'Serrano', cliente_avatar: mockClientes[1].avatar_url,
+    fecha: formatDate(addDays(today, -2)), energia: 4, puntualidad: 5, progreso: 4, estado_emocional: 4,
     comentario: 'David mantiene muy buen nivel. Ajustamos carga en ejercicios de fuerza explosiva.',
     created_at: formatISO(addDays(today, -2))
+  },
+  // Alejandro Gutiérrez - notas de sesión
+  {
+    id: 'n6', cliente_id: '11', cliente_nombre: 'Alejandro', cliente_apellidos: 'Gutiérrez', cliente_avatar: mockClientes[0].avatar_url,
+    fecha: formatDate(addDays(today, -2)), energia: 5, puntualidad: 5, progreso: 4, estado_emocional: 5,
+    comentario: 'Alejandro viene con mucha energía. Aumentamos peso en press banca a 70kg. Técnica muy limpia.',
+    created_at: formatISO(addDays(today, -2))
+  },
+  {
+    id: 'n7', cliente_id: '11', cliente_nombre: 'Alejandro', cliente_apellidos: 'Gutiérrez', cliente_avatar: mockClientes[0].avatar_url,
+    fecha: formatDate(addDays(today, -5)), energia: 4, puntualidad: 5, progreso: 4, estado_emocional: 4,
+    comentario: 'Buen trabajo en día de pierna. Sentadilla mejorando, llegamos a 80kg. Seguimos con el plan de volumen.',
+    created_at: formatISO(addDays(today, -5))
+  },
+  {
+    id: 'n8', cliente_id: '11', cliente_nombre: 'Alejandro', cliente_apellidos: 'Gutiérrez', cliente_avatar: mockClientes[0].avatar_url,
+    fecha: formatDate(addDays(today, -7)), energia: 4, puntualidad: 4, progreso: 5, estado_emocional: 4,
+    comentario: 'Día de tirón excelente. Dominadas con +5kg, muy contento con su progreso.',
+    created_at: formatISO(addDays(today, -7))
+  },
+  // Laura Pereda - notas de sesión
+  {
+    id: 'n9', cliente_id: '12', cliente_nombre: 'Laura', cliente_apellidos: 'Pereda', cliente_avatar: mockClientes[1].avatar_url,
+    fecha: formatDate(addDays(today, -1)), energia: 4, puntualidad: 5, progreso: 4, estado_emocional: 5,
+    comentario: 'Laura muy motivada. Ya nota cambios en su cuerpo. Hoy hicimos full body con más intensidad.',
+    created_at: formatISO(addDays(today, -1))
+  },
+  {
+    id: 'n10', cliente_id: '12', cliente_nombre: 'Laura', cliente_apellidos: 'Pereda', cliente_avatar: mockClientes[1].avatar_url,
+    fecha: formatDate(addDays(today, -3)), energia: 4, puntualidad: 5, progreso: 4, estado_emocional: 4,
+    comentario: 'Mejorando en técnica de sentadilla. Añadimos hip thrust con 40kg. Excelente actitud.',
+    created_at: formatISO(addDays(today, -3))
+  },
+  {
+    id: 'n11', cliente_id: '12', cliente_nombre: 'Laura', cliente_apellidos: 'Pereda', cliente_avatar: mockClientes[1].avatar_url,
+    fecha: formatDate(addDays(today, -6)), energia: 3, puntualidad: 5, progreso: 4, estado_emocional: 4,
+    comentario: 'Vino un poco cansada del trabajo pero completó toda la sesión. Muy constante.',
+    created_at: formatISO(addDays(today, -6))
   },
 ]
 
@@ -641,11 +762,13 @@ export const mockReporteMensual: ReporteMensual = {
 }
 
 export const mockClientesAdherencia: ClienteAdherencia[] = [
-  { cliente_id: '4', cliente_nombre: 'Pedro López', cliente_avatar: mockClientes[3].avatar_url, adherencia: 98, tendencia: 'subiendo' },
-  { cliente_id: '7', cliente_nombre: 'Sofía Díaz', cliente_avatar: mockClientes[6].avatar_url, adherencia: 95, tendencia: 'subiendo' },
+  { cliente_id: '4', cliente_nombre: 'Pedro López', cliente_avatar: mockClientes[5].avatar_url, adherencia: 98, tendencia: 'subiendo' },
+  { cliente_id: '7', cliente_nombre: 'Sofía Díaz', cliente_avatar: mockClientes[0].avatar_url, adherencia: 95, tendencia: 'subiendo' },
   { cliente_id: '1', cliente_nombre: 'María García', cliente_avatar: mockClientes[0].avatar_url, adherencia: 92, tendencia: 'subiendo' },
-  { cliente_id: '10', cliente_nombre: 'David Serrano', cliente_avatar: mockClientes[9].avatar_url, adherencia: 90, tendencia: 'estable' },
-  { cliente_id: '9', cliente_nombre: 'Elena Navarro', cliente_avatar: mockClientes[8].avatar_url, adherencia: 85, tendencia: 'subiendo' },
+  { cliente_id: '10', cliente_nombre: 'David Serrano', cliente_avatar: mockClientes[1].avatar_url, adherencia: 90, tendencia: 'estable' },
+  { cliente_id: '11', cliente_nombre: 'Alejandro Gutiérrez', cliente_avatar: mockClientes[0].avatar_url, adherencia: 88, tendencia: 'subiendo' },
+  { cliente_id: '9', cliente_nombre: 'Elena Navarro', cliente_avatar: mockClientes[0].avatar_url, adherencia: 85, tendencia: 'subiendo' },
+  { cliente_id: '12', cliente_nombre: 'Laura Pereda', cliente_avatar: mockClientes[1].avatar_url, adherencia: 82, tendencia: 'subiendo' },
 ]
 
 // ==========================================

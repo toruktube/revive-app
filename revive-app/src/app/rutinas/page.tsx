@@ -4,17 +4,36 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Dumbbell, Utensils } from 'lucide-react'
-import { RutinaCard, PlanNutricionCard } from '@/components/rutinas'
+import { RutinaCard, PlanNutricionCard, RutinaModal, PlanNutricionModal, AsignarClientesModal } from '@/components/rutinas'
 import { FAB } from '@/components/shared/fab'
 import { EmptyState } from '@/components/shared/empty-state'
 import { cn } from '@/lib/utils'
-import { mockRutinas, mockPlanesNutricion } from '@/lib/mock-data'
+import { mockRutinas as initialRutinas, mockPlanesNutricion } from '@/lib/mock-data'
+import type { RutinaEntrenamiento, ClienteAsignado } from '@/types'
 
 type TabType = 'entrenamiento' | 'nutricion'
 
 export default function RutinasPage() {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<TabType>('entrenamiento')
+  const [isRutinaModalOpen, setIsRutinaModalOpen] = useState(false)
+  const [isNutricionModalOpen, setIsNutricionModalOpen] = useState(false)
+  const [isAsignarClientesOpen, setIsAsignarClientesOpen] = useState(false)
+  const [selectedRutina, setSelectedRutina] = useState<RutinaEntrenamiento | null>(null)
+  const [rutinas, setRutinas] = useState(initialRutinas)
+
+  const handleAssignClients = (rutina: RutinaEntrenamiento) => {
+    setSelectedRutina(rutina)
+    setIsAsignarClientesOpen(true)
+  }
+
+  const handleSaveAssignments = (rutinaId: string, clientes: ClienteAsignado[]) => {
+    setRutinas(prev => prev.map(r =>
+      r.id === rutinaId
+        ? { ...r, clientes_asignados: clientes }
+        : r
+    ))
+  }
 
   const tabs: { value: TabType; label: string; icon: React.ElementType }[] = [
     { value: 'entrenamiento', label: 'Entrenamiento', icon: Dumbbell },
@@ -29,7 +48,7 @@ export default function RutinasPage() {
           <h2 className="text-2xl font-antonio font-semibold tracking-wide text-foreground">RUTINAS</h2>
           <p className="text-sm text-muted-foreground">
             {activeTab === 'entrenamiento'
-              ? `${mockRutinas.length} rutinas de entrenamiento`
+              ? `${rutinas.length} rutinas de entrenamiento`
               : `${mockPlanesNutricion.length} planes de nutrición`
             }
           </p>
@@ -64,14 +83,15 @@ export default function RutinasPage() {
         transition={{ duration: 0.2 }}
       >
         {activeTab === 'entrenamiento' ? (
-          mockRutinas.length > 0 ? (
+          rutinas.length > 0 ? (
             <div className="space-y-3">
-              {mockRutinas.map((rutina, index) => (
+              {rutinas.map((rutina, index) => (
                 <RutinaCard
                   key={rutina.id}
                   rutina={rutina}
                   index={index}
                   onClick={() => router.push(`/rutinas/${rutina.id}`)}
+                  onAssignClients={() => handleAssignClients(rutina)}
                 />
               ))}
             </div>
@@ -116,7 +136,40 @@ export default function RutinasPage() {
       <div className="h-8" />
 
       {/* FAB */}
-      <FAB onClick={() => console.log('Add new routine/plan')} />
+      <FAB onClick={() => {
+        if (activeTab === 'entrenamiento') {
+          setIsRutinaModalOpen(true)
+        } else {
+          setIsNutricionModalOpen(true)
+        }
+      }} />
+
+      {/* Modals */}
+      <RutinaModal
+        isOpen={isRutinaModalOpen}
+        onClose={() => setIsRutinaModalOpen(false)}
+        onSave={(rutinaData) => {
+          console.log('New routine:', rutinaData)
+        }}
+      />
+
+      <PlanNutricionModal
+        isOpen={isNutricionModalOpen}
+        onClose={() => setIsNutricionModalOpen(false)}
+        onSave={(planData) => {
+          console.log('New nutrition plan:', planData)
+        }}
+      />
+
+      <AsignarClientesModal
+        isOpen={isAsignarClientesOpen}
+        onClose={() => {
+          setIsAsignarClientesOpen(false)
+          setSelectedRutina(null)
+        }}
+        rutina={selectedRutina}
+        onSave={handleSaveAssignments}
+      />
     </div>
   )
 }

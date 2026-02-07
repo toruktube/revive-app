@@ -1,2 +1,5 @@
 export { RutinaCard } from './rutina-card'
 export { PlanNutricionCard } from './plan-nutricion-card'
+export { RutinaModal } from './rutina-modal'
+export { PlanNutricionModal } from './plan-nutricion-modal'
+export { AsignarClientesModal } from './asignar-clientes-modal'

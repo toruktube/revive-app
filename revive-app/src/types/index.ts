@@ -28,6 +28,7 @@ export interface ClienteConEstado extends Cliente {
   tendencia?: 'subiendo' | 'estable' | 'bajando'
   alertasActivas?: number
   estadoPago?: EstadoPago
+  tipoPlanPago?: TipoPlanPago
   proximaSesion?: string
   proximoPago?: string
 }
@@ -53,6 +54,7 @@ export interface SesionCalendario {
 
 // --- FACTURACION / PAGOS ---
 export type EstadoPago = 'pagado' | 'pendiente' | 'vencido'
+export type TipoPlanPago = 'mensual' | 'trimestral' | 'semestral' | 'anual'
 export type MetodoPago = 'efectivo' | 'transferencia' | 'tarjeta' | 'bizum'
 export type TipoTransaccion = 'ingreso' | 'gasto'
 
@@ -102,6 +104,13 @@ export interface DiaRutina {
   ejercicios: EjercicioRutina[]
 }
 
+export interface ClienteAsignado {
+  id: string
+  nombre: string
+  apellidos?: string
+  avatar_url?: string
+}
+
 export interface RutinaEntrenamiento {
   id: string
   nombre: string
@@ -111,6 +120,7 @@ export interface RutinaEntrenamiento {
   nivel: NivelRutina
   objetivo?: ObjetivoRutina
   dias: DiaRutina[]
+  clientes_asignados?: ClienteAsignado[]
   created_at: string
 }
 
@@ -183,6 +193,7 @@ export interface NotaSesion {
   energia: number
   puntualidad: number
   progreso: number
+  estado_emocional: number
   comentario: string
   created_at: string
 }

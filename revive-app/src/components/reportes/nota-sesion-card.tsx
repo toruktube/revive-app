@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Zap, Clock, TrendingUp } from 'lucide-react'
+import { Zap, Clock, TrendingUp, Heart } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { NotaSesion } from '@/types'
 
@@ -16,7 +16,16 @@ function formatDate(dateStr: string): string {
   return date.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' })
 }
 
-function RatingDots({ value, max = 5 }: { value: number; max?: number }) {
+type MetricColor = 'energia' | 'puntualidad' | 'progreso' | 'emocional'
+
+const metricColors: Record<MetricColor, string> = {
+  energia: 'bg-[#F59E0B]',
+  puntualidad: 'bg-[#3B82F6]',
+  progreso: 'bg-[#10B981]',
+  emocional: 'bg-[#A855F7]',
+}
+
+function RatingDots({ value, color, max = 5 }: { value: number; color: MetricColor; max?: number }) {
   return (
     <div className="flex gap-0.5">
       {Array.from({ length: max }, (_, i) => (
@@ -24,7 +33,7 @@ function RatingDots({ value, max = 5 }: { value: number; max?: number }) {
           key={i}
           className={cn(
             'size-2 rounded-full',
-            i < value ? 'bg-[var(--accent-emerald)]' : 'bg-white/10'
+            i < value ? metricColors[color] : 'bg-black/10 dark:bg-white/10'
           )}
         />
       ))}
@@ -70,18 +79,22 @@ export function NotaSesionCard({ nota, onClick, index = 0 }: NotaSesionCardProps
       </div>
 
       {/* Ratings */}
-      <div className="flex items-center gap-4 pt-3 border-t border-white/10">
-        <div className="flex items-center gap-2">
-          <Zap className="w-3.5 h-3.5 text-warning" />
-          <RatingDots value={nota.energia} />
+      <div className="flex items-center gap-3 pt-3 border-t border-white/10">
+        <div className="flex items-center gap-1.5">
+          <Zap className="w-3 h-3 text-[#F59E0B]" />
+          <RatingDots value={nota.energia} color="energia" />
         </div>
-        <div className="flex items-center gap-2">
-          <Clock className="w-3.5 h-3.5 text-[var(--accent-blue)]" />
-          <RatingDots value={nota.puntualidad} />
+        <div className="flex items-center gap-1.5">
+          <Clock className="w-3 h-3 text-[#3B82F6]" />
+          <RatingDots value={nota.puntualidad} color="puntualidad" />
         </div>
-        <div className="flex items-center gap-2">
-          <TrendingUp className="w-3.5 h-3.5 text-[var(--accent-emerald)]" />
-          <RatingDots value={nota.progreso} />
+        <div className="flex items-center gap-1.5">
+          <TrendingUp className="w-3 h-3 text-[#10B981]" />
+          <RatingDots value={nota.progreso} color="progreso" />
+        </div>
+        <div className="flex items-center gap-1.5">
+          <Heart className="w-3 h-3 text-[#A855F7]" />
+          <RatingDots value={nota.estado_emocional} color="emocional" />
         </div>
       </div>
     </motion.div>

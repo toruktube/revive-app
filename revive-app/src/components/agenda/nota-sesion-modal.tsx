@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, User, Calendar, Zap, Clock, TrendingUp, FileText, Link } from 'lucide-react'
+import { X, User, Calendar, Zap, Clock, TrendingUp, Heart, FileText, Link } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { GlassButton } from '@/components/glass'
 import { useModalState } from '@/hooks'
@@ -27,15 +27,27 @@ const inputStyles = cn(
 
 const labelStyles = 'text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1.5 block'
 
+type MetricColor = 'energia' | 'puntualidad' | 'progreso' | 'emocional'
+
+const metricColorStyles: Record<MetricColor, { bg: string; shadow: string }> = {
+  energia: { bg: 'bg-[#F59E0B]', shadow: 'shadow-[0_0_10px_rgba(245,158,11,0.4)]' },
+  puntualidad: { bg: 'bg-[#3B82F6]', shadow: 'shadow-[0_0_10px_rgba(59,130,246,0.4)]' },
+  progreso: { bg: 'bg-[#10B981]', shadow: 'shadow-[0_0_10px_rgba(16,185,129,0.4)]' },
+  emocional: { bg: 'bg-[#A855F7]', shadow: 'shadow-[0_0_10px_rgba(168,85,247,0.4)]' },
+}
+
 function RatingSelector({
   value,
   onChange,
+  color,
   max = 5
 }: {
   value: number
   onChange: (value: number) => void
+  color: MetricColor
   max?: number
 }) {
+  const colorStyle = metricColorStyles[color]
   return (
     <div className="flex gap-1.5">
       {Array.from({ length: max }, (_, i) => (
@@ -46,8 +58,8 @@ function RatingSelector({
           className={cn(
             'size-8 rounded-full transition-all duration-200',
             i < value
-              ? 'bg-[var(--accent-emerald)] shadow-[0_0_10px_rgba(16,185,129,0.4)]'
-              : 'bg-white/10 hover:bg-white/20'
+              ? `${colorStyle.bg} ${colorStyle.shadow}`
+              : 'bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20'
           )}
         />
       ))}
@@ -72,6 +84,7 @@ export function NotaSesionModal({
     energia: 3,
     puntualidad: 3,
     progreso: 3,
+    estado_emocional: 3,
     comentario: '',
   })
 
@@ -89,6 +102,7 @@ export function NotaSesionModal({
           energia: nota.energia,
           puntualidad: nota.puntualidad,
           progreso: nota.progreso,
+          estado_emocional: nota.estado_emocional,
           comentario: nota.comentario,
         })
       } else if (sesionVinculada) {
@@ -100,6 +114,7 @@ export function NotaSesionModal({
           energia: 3,
           puntualidad: 3,
           progreso: 3,
+          estado_emocional: 3,
           comentario: '',
         })
       } else {
@@ -112,6 +127,7 @@ export function NotaSesionModal({
           energia: 3,
           puntualidad: 3,
           progreso: 3,
+          estado_emocional: 3,
           comentario: '',
         })
       }
@@ -152,6 +168,7 @@ export function NotaSesionModal({
       energia: formData.energia,
       puntualidad: formData.puntualidad,
       progreso: formData.progreso,
+      estado_emocional: formData.estado_emocional,
       comentario: formData.comentario,
     })
 
@@ -170,33 +187,33 @@ export function NotaSesionModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"
+            className="fixed inset-0 bg-black/60 z-[60]"
           />
 
-          {/* Modal */}
+          {/* Bottom Sheet */}
           <motion.div
-            initial={{ opacity: 0, y: 100, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 100, scale: 0.95 }}
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed inset-x-4 top-16 bottom-4 z-[60] overflow-hidden rounded-3xl"
+            className="fixed bottom-0 left-0 right-0 z-[60] bg-background rounded-t-3xl border-t border-white/10 max-h-[85vh] overflow-hidden"
           >
-            <div className="glass-card h-full flex flex-col overflow-hidden max-w-full">
+            <div className="h-full flex flex-col overflow-hidden max-w-full">
               {/* Header */}
-              <div className="flex items-center justify-between p-5 border-b border-white/10">
-                <h2 className="text-lg font-bold text-foreground">
-                  {isEditing ? 'Editar reporte' : 'Nuevo reporte'}
-                </h2>
+              <div className="flex items-center justify-between p-4 border-b border-white/10">
+                <h3 className="text-lg font-antonio font-semibold tracking-wide text-foreground uppercase">
+                  {isEditing ? 'Editar Reporte' : 'Nuevo Reporte'}
+                </h3>
                 <button
                   onClick={onClose}
                   className="size-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
                 >
-                  <X className="w-4 h-4 text-muted-foreground" />
+                  <X className="w-4 h-4 text-foreground" />
                 </button>
               </div>
 
               {/* Form */}
-              <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto overflow-x-hidden p-5 space-y-4">
+              <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4">
                 {/* Linked Session Badge */}
                 {formData.sesion_id && (
                   <motion.div
@@ -224,11 +241,9 @@ export function NotaSesionModal({
                   <select
                     value={formData.cliente_id}
                     onChange={(e) => setFormData({ ...formData, cliente_id: e.target.value })}
-                    disabled={!!sesionVinculada}
                     className={cn(
                       inputStyles,
-                      errors.cliente_id && 'border-red-500/50',
-                      sesionVinculada && 'opacity-60 cursor-not-allowed'
+                      errors.cliente_id && 'border-red-500/50'
                     )}
                   >
                     <option value="">Seleccionar cliente...</option>
@@ -253,11 +268,9 @@ export function NotaSesionModal({
                     type="date"
                     value={formData.fecha}
                     onChange={(e) => setFormData({ ...formData, fecha: e.target.value })}
-                    disabled={!!sesionVinculada}
                     className={cn(
                       inputStyles,
-                      errors.fecha && 'border-red-500/50',
-                      sesionVinculada && 'opacity-60 cursor-not-allowed'
+                      errors.fecha && 'border-red-500/50'
                     )}
                   />
                   {errors.fecha && (
@@ -270,36 +283,52 @@ export function NotaSesionModal({
                   {/* Energía */}
                   <div>
                     <label className={labelStyles}>
-                      <Zap className="w-3 h-3 inline mr-1 text-warning" />
+                      <Zap className="w-3 h-3 inline mr-1 text-[#F59E0B]" />
                       Energía
                     </label>
                     <RatingSelector
                       value={formData.energia}
                       onChange={(v) => setFormData({ ...formData, energia: v })}
+                      color="energia"
                     />
                   </div>
 
                   {/* Puntualidad */}
                   <div>
                     <label className={labelStyles}>
-                      <Clock className="w-3 h-3 inline mr-1 text-[var(--accent-blue)]" />
+                      <Clock className="w-3 h-3 inline mr-1 text-[#3B82F6]" />
                       Puntualidad
                     </label>
                     <RatingSelector
                       value={formData.puntualidad}
                       onChange={(v) => setFormData({ ...formData, puntualidad: v })}
+                      color="puntualidad"
                     />
                   </div>
 
                   {/* Progreso */}
                   <div>
                     <label className={labelStyles}>
-                      <TrendingUp className="w-3 h-3 inline mr-1 text-[var(--accent-emerald)]" />
+                      <TrendingUp className="w-3 h-3 inline mr-1 text-[#10B981]" />
                       Progreso
                     </label>
                     <RatingSelector
                       value={formData.progreso}
                       onChange={(v) => setFormData({ ...formData, progreso: v })}
+                      color="progreso"
+                    />
+                  </div>
+
+                  {/* Estado Emocional */}
+                  <div>
+                    <label className={labelStyles}>
+                      <Heart className="w-3 h-3 inline mr-1 text-[#A855F7]" />
+                      Estado Emocional
+                    </label>
+                    <RatingSelector
+                      value={formData.estado_emocional}
+                      onChange={(v) => setFormData({ ...formData, estado_emocional: v })}
+                      color="emocional"
                     />
                   </div>
                 </div>
@@ -321,7 +350,7 @@ export function NotaSesionModal({
               </form>
 
               {/* Footer */}
-              <div className="p-5 border-t border-white/10 flex gap-3">
+              <div className="p-4 border-t border-white/10 flex gap-3">
                 <GlassButton
                   type="button"
                   onClick={onClose}

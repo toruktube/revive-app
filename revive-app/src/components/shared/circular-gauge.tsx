@@ -4,10 +4,19 @@ import { cn } from '@/lib/utils'
 
 interface CircularGaugeProps {
   value: number // 0-100
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'xl'
   showLabel?: boolean
   label?: string
   className?: string
+  color?: 'energia' | 'puntualidad' | 'progreso' | 'emocional' // Single color mode for breakdown gauges
+}
+
+// Single color definitions for breakdown gauges
+const metricColors = {
+  energia: '#F59E0B', // Amber/Orange
+  puntualidad: '#3B82F6', // Blue
+  progreso: '#10B981', // Emerald/Green
+  emocional: '#A855F7', // Purple/Violet
 }
 
 export function CircularGauge({
@@ -16,6 +25,7 @@ export function CircularGauge({
   showLabel = false,
   label,
   className,
+  color,
 }: CircularGaugeProps) {
   // Clamp value between 0 and 100
   const clampedValue = Math.max(0, Math.min(100, value))
@@ -25,6 +35,7 @@ export function CircularGauge({
     sm: { width: 48, strokeWidth: 4, fontSize: 'text-sm', labelSize: 'text-[8px]' },
     md: { width: 64, strokeWidth: 5, fontSize: 'text-lg', labelSize: 'text-[9px]' },
     lg: { width: 80, strokeWidth: 6, fontSize: 'text-xl', labelSize: 'text-xs' },
+    xl: { width: 120, strokeWidth: 8, fontSize: 'text-4xl', labelSize: 'text-sm' },
   }
 
   const config = sizes[size]
@@ -32,8 +43,9 @@ export function CircularGauge({
   const circumference = radius * Math.PI * 1.5 // 270 degrees (3/4 circle)
   const strokeDashoffset = circumference - (clampedValue / 100) * circumference
 
-  // Color based on value
-  const getColor = () => {
+  // Color based on value (for glow effect)
+  const getGlowColor = () => {
+    if (color) return metricColors[color]
     if (clampedValue >= 80) return 'var(--accent-emerald)'
     if (clampedValue >= 60) return 'var(--accent-blue)'
     if (clampedValue >= 40) return '#F59E0B' // amber
@@ -43,6 +55,9 @@ export function CircularGauge({
   const getGradientId = () => `gauge-gradient-${Math.random().toString(36).substr(2, 9)}`
   const gradientId = getGradientId()
 
+  // Stroke color - single color for breakdown gauges, gradient for general
+  const strokeColor = color ? metricColors[color] : `url(#${gradientId})`
+
   return (
     <div className={cn('relative inline-flex items-center justify-center', className)}>
       <svg
@@ -51,13 +66,12 @@ export function CircularGauge({
         viewBox={`0 0 ${config.width} ${config.width}`}
         className="transform -rotate-[135deg]"
       >
-        {/* Gradient definition */}
+        {/* Gradient definition - combines the 3 metric colors */}
         <defs>
           <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#EF4444" />
-            <stop offset="33%" stopColor="#F59E0B" />
-            <stop offset="66%" stopColor="var(--accent-blue)" />
-            <stop offset="100%" stopColor="var(--accent-emerald)" />
+            <stop offset="0%" stopColor={metricColors.energia} />
+            <stop offset="50%" stopColor={metricColors.puntualidad} />
+            <stop offset="100%" stopColor={metricColors.progreso} />
           </linearGradient>
         </defs>
 
@@ -81,14 +95,16 @@ export function CircularGauge({
           cy={config.width / 2}
           r={radius}
           fill="none"
-          stroke={`url(#${gradientId})`}
+          stroke={strokeColor}
           strokeWidth={config.strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
           className="transition-all duration-500 ease-out"
           style={{
-            filter: `drop-shadow(0 0 6px ${getColor()})`,
+            filter: size === 'xl'
+              ? `drop-shadow(0 0 12px ${getGlowColor()}) drop-shadow(0 0 24px ${getGlowColor()})`
+              : `drop-shadow(0 0 6px ${getGlowColor()})`,
           }}
         />
 
