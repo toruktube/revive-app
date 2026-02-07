@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { CreditCard } from 'lucide-react'
-import { ResumenMensualCard, TransaccionCard } from '@/components/facturacion'
+import { ResumenMensualCard, TransaccionCard, TransaccionModal } from '@/components/facturacion'
 import { FAB } from '@/components/shared/fab'
 import { EmptyState } from '@/components/shared/empty-state'
 import { cn } from '@/lib/utils'
@@ -12,6 +12,7 @@ type FiltroTipo = 'todos' | 'ingresos' | 'gastos' | 'pendientes'
 
 export default function FacturacionPage() {
   const [filtro, setFiltro] = useState<FiltroTipo>('todos')
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const transaccionesFiltradas = useMemo(() => {
     return mockTransacciones.filter(t => {
@@ -104,7 +105,16 @@ export default function FacturacionPage() {
       <div className="h-8" />
 
       {/* FAB */}
-      <FAB onClick={() => console.log('Add new transaction')} />
+      <FAB onClick={() => setIsModalOpen(true)} />
+
+      {/* Modal */}
+      <TransaccionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSave={(transaccionData) => {
+          console.log('New transaction:', transaccionData)
+        }}
+      />
     </div>
   )
 }

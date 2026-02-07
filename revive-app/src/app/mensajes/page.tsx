@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { MessageCircle, Search } from 'lucide-react'
-import { ConversacionItem } from '@/components/mensajes'
+import { ConversacionItem, NuevaConversacionModal } from '@/components/mensajes'
 import { FAB } from '@/components/shared/fab'
 import { EmptyState } from '@/components/shared/empty-state'
 import { cn } from '@/lib/utils'
@@ -12,6 +12,7 @@ import { mockConversaciones } from '@/lib/mock-data'
 export default function MensajesPage() {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const conversacionesFiltradas = useMemo(() => {
     if (!searchQuery) return mockConversaciones
@@ -80,7 +81,16 @@ export default function MensajesPage() {
       <div className="h-8" />
 
       {/* FAB */}
-      <FAB onClick={() => console.log('New message')} />
+      <FAB onClick={() => setIsModalOpen(true)} />
+
+      {/* Modal */}
+      <NuevaConversacionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSelectCliente={(clienteId) => {
+          router.push(`/mensajes/${clienteId}`)
+        }}
+      />
     </div>
   )
 }

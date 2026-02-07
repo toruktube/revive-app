@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useState } from 'react'
+import { use, useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -24,7 +24,7 @@ import { cn } from '@/lib/utils'
 import { GlassCard, GlassBadge, GlassButton } from '@/components/glass'
 import { CircularGauge } from '@/components/shared'
 import { useModalState } from '@/hooks'
-import { mockClientes, mockRutinas, mockPlanesNutricion } from '@/lib/mock-data'
+import { mockClientes, mockRutinas, mockPlanesNutricion, mockNotasSesion } from '@/lib/mock-data'
 
 interface ClienteDetailPageProps {
   params: Promise<{ id: string }>
@@ -39,6 +39,30 @@ export default function ClienteDetailPage({ params }: ClienteDetailPageProps) {
   const [selectedRutina, setSelectedRutina] = useState(cliente?.plan_actual || '')
   const [selectedNutricion, setSelectedNutricion] = useState('')
   useModalState(showRutinaSelector || showNutricionSelector)
+
+  // Calculate average metrics from notas
+  const metricsPromedio = useMemo(() => {
+    const notasCliente = mockNotasSesion.filter(n => n.cliente_id === id)
+    if (notasCliente.length === 0) {
+      return { energia: 0, puntualidad: 0, progreso: 0, estado_emocional: 0 }
+    }
+    const sum = notasCliente.reduce(
+      (acc, nota) => ({
+        energia: acc.energia + nota.energia,
+        puntualidad: acc.puntualidad + nota.puntualidad,
+        progreso: acc.progreso + nota.progreso,
+        estado_emocional: acc.estado_emocional + nota.estado_emocional,
+      }),
+      { energia: 0, puntualidad: 0, progreso: 0, estado_emocional: 0 }
+    )
+    // Convert from 1-5 scale to percentage (multiply by 20)
+    return {
+      energia: Math.round((sum.energia / notasCliente.length) * 20),
+      puntualidad: Math.round((sum.puntualidad / notasCliente.length) * 20),
+      progreso: Math.round((sum.progreso / notasCliente.length) * 20),
+      estado_emocional: Math.round((sum.estado_emocional / notasCliente.length) * 20),
+    }
+  }, [id])
 
   const handleSelectRutina = (rutinaNombre: string) => {
     setSelectedRutina(rutinaNombre)
@@ -69,6 +93,16 @@ export default function ClienteDetailPage({ params }: ClienteDetailPageProps) {
         return <TrendingDown className="w-4 h-4 text-destructive" />
       default:
         return <Minus className="w-4 h-4 text-muted-foreground" />
+    }
+  }
+
+  const getTipoPlanPagoLabel = () => {
+    switch (cliente.tipoPlanPago) {
+      case 'mensual': return 'Mensual'
+      case 'trimestral': return 'Trimestral'
+      case 'semestral': return 'Semestral'
+      case 'anual': return 'Anual'
+      default: return ''
     }
   }
 
@@ -118,17 +152,59 @@ export default function ClienteDetailPage({ params }: ClienteDetailPageProps) {
 
         {/* Adherencia */}
         <div className="mt-4 pt-4 border-t border-white/10">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">Adherencia</span>
+          {/* Hero Gauge - Centrado y Explosivo */}
+          <div className="flex flex-col items-center justify-center py-4">
+            <div className="relative">
+              {/* Glow effect behind gauge */}
+              <div
+                className={cn(
+                  "absolute inset-0 rounded-full blur-2xl opacity-40 scale-110",
+                  (cliente.adherenciaPromedio || 0) >= 80 ? 'bg-[var(--accent-emerald)]' :
+                  (cliente.adherenciaPromedio || 0) >= 60 ? 'bg-[var(--accent-blue)]' :
+                  (cliente.adherenciaPromedio || 0) >= 40 ? 'bg-amber-500' : 'bg-red-500'
+                )}
+              />
+              {/* Pulse animation ring */}
+              <div
+                className={cn(
+                  "absolute inset-0 rounded-full animate-ping opacity-20",
+                  (cliente.adherenciaPromedio || 0) >= 80 ? 'bg-[var(--accent-emerald)]' :
+                  (cliente.adherenciaPromedio || 0) >= 60 ? 'bg-[var(--accent-blue)]' :
+                  (cliente.adherenciaPromedio || 0) >= 40 ? 'bg-amber-500' : 'bg-red-500'
+                )}
+                style={{ animationDuration: '3s' }}
+              />
+              <CircularGauge value={cliente.adherenciaPromedio || 0} size="xl" />
+            </div>
+            <div className="flex items-center gap-2 mt-3">
+              <span className="text-sm font-medium text-foreground uppercase tracking-wider">Adherencia</span>
               {(cliente.adherenciaPromedio || 0) < 80 && (
                 <AlertCircle className={cn(
-                  "w-3.5 h-3.5",
+                  "w-4 h-4",
                   (cliente.adherenciaPromedio || 0) >= 60 ? 'text-warning' : 'text-destructive'
                 )} />
               )}
             </div>
-            <CircularGauge value={cliente.adherenciaPromedio || 0} size="lg" />
+          </div>
+
+          {/* Desglose de métricas */}
+          <div className="grid grid-cols-4 gap-2 pt-4 border-t border-white/5">
+            <div className="flex flex-col items-center gap-1">
+              <CircularGauge value={metricsPromedio.energia} size="sm" color="energia" />
+              <span className="text-[9px] text-muted-foreground uppercase tracking-wider">Energía</span>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <CircularGauge value={metricsPromedio.puntualidad} size="sm" color="puntualidad" />
+              <span className="text-[9px] text-muted-foreground uppercase tracking-wider">Puntualidad</span>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <CircularGauge value={metricsPromedio.progreso} size="sm" color="progreso" />
+              <span className="text-[9px] text-muted-foreground uppercase tracking-wider">Progreso</span>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <CircularGauge value={metricsPromedio.estado_emocional} size="sm" color="emocional" />
+              <span className="text-[9px] text-muted-foreground uppercase tracking-wider">Emocional</span>
+            </div>
           </div>
         </div>
       </GlassCard>
@@ -198,6 +274,11 @@ export default function ClienteDetailPage({ params }: ClienteDetailPageProps) {
               )}>
                 {cliente.estadoPago === 'pagado' ? 'Al día' : cliente.estadoPago === 'pendiente' ? 'Pendiente' : 'Vencido'}
               </p>
+              {cliente.tipoPlanPago && (
+                <p className="text-[10px] text-muted-foreground">
+                  {getTipoPlanPagoLabel()}
+                </p>
+              )}
             </div>
           </div>
         </GlassCard>

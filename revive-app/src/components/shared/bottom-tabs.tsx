@@ -9,7 +9,6 @@ import {
   Users,
   CreditCard,
   Dumbbell,
-  MessageCircle,
   BarChart3,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -25,7 +24,6 @@ const tabs: TabItem[] = [
   { label: 'Clientes', href: '/clientes', icon: Users },
   { label: 'Pagos', href: '/facturacion', icon: CreditCard },
   { label: 'Rutinas', href: '/rutinas', icon: Dumbbell },
-  { label: 'Mensajes', href: '/mensajes', icon: MessageCircle },
   { label: 'Reportes', href: '/reportes', icon: BarChart3 },
 ]
 

@@ -127,10 +127,11 @@ export function SesionModal({ isOpen, onClose, sesion, onSave, selectedDate }: S
 
   const handleWhatsAppReminder = () => {
     const cliente = mockClientes.find(c => c.id === formData.cliente_id)
-    if (!cliente) return
+    if (!cliente || !cliente.telefono) return
 
-    // Phone number for WhatsApp
-    const phone = '34664846927'
+    // Clean phone number and add Spain prefix if needed
+    const cleanPhone = cliente.telefono.replace(/\D/g, '')
+    const phone = cleanPhone.startsWith('34') ? cleanPhone : `34${cleanPhone}`
 
     // Format date for message
     const fechaObj = new Date(formData.fecha + 'T00:00:00')
@@ -140,8 +141,8 @@ export function SesionModal({ isOpen, onClose, sesion, onSave, selectedDate }: S
       month: 'long'
     })
 
-    // Build reminder message
-    const mensaje = `¡Hola Laura! 👋
+    // Build reminder message with client's name
+    const mensaje = `¡Hola ${cliente.nombre}! 👋
 
 Te recuerdo que tienes sesión de entrenamiento:
 
@@ -165,33 +166,33 @@ ${formData.tipo === 'presencial' ? `📍 ${formData.ubicacion || 'Club Revive'}`
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"
+            className="fixed inset-0 bg-black/60 z-[60]"
           />
 
-          {/* Modal */}
+          {/* Bottom Sheet */}
           <motion.div
-            initial={{ opacity: 0, y: 100, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 100, scale: 0.95 }}
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed inset-x-0 top-0 bottom-0 z-[60] overflow-hidden bg-background"
+            className="fixed bottom-0 left-0 right-0 z-[60] bg-background rounded-t-3xl border-t border-white/10 max-h-[85vh] overflow-hidden"
           >
-            <div className="h-full flex flex-col overflow-hidden max-w-full pt-12">
+            <div className="h-full flex flex-col overflow-hidden max-w-full">
               {/* Header */}
-              <div className="flex items-center justify-between p-5 border-b border-white/10">
-                <h2 className="text-lg font-bold text-foreground">
-                  {isEditing ? 'Editar sesión' : 'Nueva sesión'}
-                </h2>
+              <div className="flex items-center justify-between p-4 border-b border-white/10">
+                <h3 className="text-lg font-antonio font-semibold tracking-wide text-foreground uppercase">
+                  {isEditing ? 'Editar Sesión' : 'Nueva Sesión'}
+                </h3>
                 <button
                   onClick={onClose}
                   className="size-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
                 >
-                  <X className="w-4 h-4 text-muted-foreground" />
+                  <X className="w-4 h-4 text-foreground" />
                 </button>
               </div>
 
               {/* Form */}
-              <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto overflow-x-hidden p-5 space-y-4">
+              <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4">
                 {/* Cliente */}
                 <div>
                   <label className={labelStyles}>
@@ -363,7 +364,7 @@ ${formData.tipo === 'presencial' ? `📍 ${formData.ubicacion || 'Club Revive'}`
               </form>
 
               {/* Footer */}
-              <div className="p-5 pb-8 border-t border-white/10 flex gap-3">
+              <div className="p-4 border-t border-white/10 flex gap-3">
                 <GlassButton
                   type="button"
                   onClick={onClose}

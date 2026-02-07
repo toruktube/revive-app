@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FileText, BarChart3 } from 'lucide-react'
 import { NotaSesionCard, AdherenciaChart, ResumenStats } from '@/components/reportes'
+import { NotaSesionModal } from '@/components/agenda'
 import { FAB } from '@/components/shared/fab'
 import { EmptyState } from '@/components/shared/empty-state'
 import { cn } from '@/lib/utils'
@@ -13,6 +14,7 @@ type TabType = 'notas' | 'reportes'
 
 export default function ReportesPage() {
   const [activeTab, setActiveTab] = useState<TabType>('notas')
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const tabs: { value: TabType; label: string; icon: React.ElementType }[] = [
     { value: 'notas', label: 'Notas Sesión', icon: FileText },
@@ -97,8 +99,17 @@ export default function ReportesPage() {
 
       {/* FAB - only for notes tab */}
       {activeTab === 'notas' && (
-        <FAB onClick={() => console.log('Add new note')} />
+        <FAB onClick={() => setIsModalOpen(true)} />
       )}
+
+      {/* Modal */}
+      <NotaSesionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSave={(notaData) => {
+          console.log('New note:', notaData)
+        }}
+      />
     </div>
   )
 }
